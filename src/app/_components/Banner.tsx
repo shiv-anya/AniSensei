@@ -69,7 +69,9 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
         <div
           className={`w-[75%] mx-auto h-full bg-cover bg-no-repeat bg-center shadow-poster shadow-blue-400/40 hover:scale-105 transition duration-700`}
           style={{ backgroundImage: `url(${img})` }}
-        ></div>
+        >
+          <div className="h-full w-full transition duration-700 hover:bg-gradient-to-t hover:from-black hover:from-0% hover:to-transparent to-60%"></div>
+        </div>
       </div>
     </div>
   );
