@@ -7,37 +7,39 @@ import { MdOutlineLocalMovies } from "react-icons/md";
 import { PiPopcorn } from "react-icons/pi";
 import { FaRegStar } from "react-icons/fa";
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
+import { fetchAniList } from "./_lib/fetchAniList";
+import {
+  BANNER_ANIMES_QUERY,
+  COMING_SOON_ANIMES_QUERY,
+  NEW_RELEASED_ANIMES_QUERY,
+  POPULAR_ANIME_SHOWS_QUERY,
+  TOP_RATED_ANIMES,
+  TRENDING_ANIMES_QUERY,
+  WHATS_POPULAR_QUERY,
+} from "./_graphql/queries";
 
-export default function Home() {
-  const movies = [
-    {
-      name: "Demon Slayer: Kimetsu no Yaiba",
-      date: "June 13, 2025",
-      type: "Series",
-      rating: "6.8/10",
-      about:
-        "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and to avenge.",
-      img: "/assets/poster.jpg",
-    },
-    {
-      name: "echo valley2",
-      date: "June 13, 2025",
-      type: "Movie",
-      rating: "6.8/10",
-      about:
-        "Kate lives a secluded life—until her troubled daughter shows up, frightened and covered in someone else's blood. As Kate unravels the shocking truth, she learns just how far a mother will go to try to save her child.",
-      img: "/assets/poster.jpg",
-    },
-    {
-      name: "echo valley3",
-      date: "June 13, 2025",
-      type: "Movie",
-      rating: "6.8/10",
-      about:
-        "Kate lives a secluded life—until her troubled daughter shows up, frightened and covered in someone else's blood. As Kate unravels the shocking truth, she learns just how far a mother will go to try to save her child.",
-      img: "/assets/poster.jpg",
-    },
-  ];
+export default async function Home() {
+  const bannerAnimes = await fetchAniList({ query: BANNER_ANIMES_QUERY });
+  const finalBannerAnimes = bannerAnimes.Page.media
+    .filter((anime) => anime.title.english?.length < 15)
+    .slice(0, 5);
+
+  const trendingAnimes = await fetchAniList({ query: TRENDING_ANIMES_QUERY });
+
+  const newReleasedAnimes = await fetchAniList({
+    query: NEW_RELEASED_ANIMES_QUERY,
+  });
+
+  const popularShows = await fetchAniList({ query: POPULAR_ANIME_SHOWS_QUERY });
+
+  const comingSoonAnimes = await fetchAniList({
+    query: COMING_SOON_ANIMES_QUERY,
+  });
+
+  const topRatedAnimes = await fetchAniList({ query: TOP_RATED_ANIMES });
+
+  const whatsPopularAnimes = await fetchAniList({ query: WHATS_POPULAR_QUERY });
+
   const dummyAnimes = [
     {
       title: "Demon Slayer",
@@ -74,54 +76,54 @@ export default function Home() {
 
   return (
     <div className="w-[80%] mx-auto pb-[10vh]">
-      <BannerCarousel movies={movies} />
-      <ListCarousel
+      <BannerCarousel movies={finalBannerAnimes} />
+      {/* <ListCarousel
         animes={dummyAnimes}
         title={"Continue Watching"}
         icon={<IoPlayCircleOutline />}
         height={"40"}
-        itemsCountPerPage={6}
-      />
+        itemsCountPerPage={7}
+      /> */}
       <ListCarousel
-        animes={dummyAnimes}
+        animes={trendingAnimes.Page.media}
         title={"trending now"}
         icon={<IoIosTrendingUp />}
         height={"80"}
         itemsCountPerPage={4}
       />
       <ListCarousel
-        animes={dummyAnimes}
+        animes={newReleasedAnimes.Page.media}
         title={"new releases"}
         icon={<IoAddCircleOutline />}
         height={"50"}
         itemsCountPerPage={2}
       />
       <ListCarousel
-        animes={dummyAnimes}
+        animes={popularShows.Page.media}
         title={"popular shows"}
         icon={<MdOutlineLocalMovies />}
         height={"80"}
         itemsCountPerPage={4}
       />
       <ListCarousel
-        animes={dummyAnimes}
+        animes={comingSoonAnimes.Page.media}
         title={"coming soon"}
         icon={<PiPopcorn />}
         height={"80"}
         itemsCountPerPage={4}
       />
       <ListCarousel
-        animes={dummyAnimes}
+        animes={topRatedAnimes.Page.media}
         title={"top rated shows"}
         icon={<FaRegStar />}
         height={"80"}
         itemsCountPerPage={4}
       />
       <ListCarousel
-        animes={dummyAnimes}
+        animes={whatsPopularAnimes.Page.media}
         title={"what's popular"}
         icon={<MdOutlineLocalFireDepartment />}
-        height={"30"}
+        height={"35"}
         itemsCountPerPage={3}
       />
     </div>
