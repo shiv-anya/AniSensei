@@ -9,6 +9,10 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
   const words = about.split(" ");
   const first20 = words.slice(0, 20);
   const result = first20.join(" ");
+  const day = String(date.day).padStart(2, "0");
+  const month = String(date.month).padStart(2, "0");
+  const year = date.year;
+  const formattedDate = `${day}-${month}-${year}`;
 
   return (
     <div
@@ -16,7 +20,7 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
       style={{ backgroundImage: `url(${img})` }}
     >
       <div className="h-full rounded-[2.5rem] w-full bg-[rgba(0,0,0,0.8)] absolute top-0 left-0"></div>
-      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col justify-center">
+      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col justify-around">
         <div>
           <h2 className="text-6xl capitalize font-inter font-bold">{name}</h2>
           <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-2"></div>
@@ -26,7 +30,7 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
             <span className="text-blue-500 text-base">
               <CiCalendar />
             </span>
-            {date}
+            {formattedDate}
           </div>
           <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
             <span className="text-blue-500 text-base">

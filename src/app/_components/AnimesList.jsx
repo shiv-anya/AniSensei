@@ -1,0 +1,85 @@
+"use client";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { MdLocalMovies } from "react-icons/md";
+import { ALL_ANIME_QUERY } from "../_graphql/queries";
+import { fetchAniList } from "../_lib/fetchAniList";
+import useInfiniteScroll from "../_hooks/useInfiniteScroll";
+import AnimeCard from "./AnimeCard";
+import { debounce } from "../_utils/debounce";
+
+export default function AnimesList({ query, filters }) {
+  const pageRef = useRef(0);
+  const totalRef = useRef(0);
+  const [animeList, setAnimeList] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const sort = filters?.sort_by || undefined;
+  const format = filters?.format || undefined;
+  const status = filters?.status || undefined;
+
+  const loadMore = async () => {
+    try {
+      const nextPage = pageRef.current + 1;
+      const data = await fetchAniList({
+        query,
+        variables: {
+          page: nextPage,
+          perPage: 50,
+          ...(sort && { sort: [sort] }),
+          ...(format && { format }),
+          ...(status && { status }),
+        },
+      });
+
+      setAnimeList((prev) => [...prev, ...data.Page.media]);
+      totalRef.current = data.Page.pageInfo.total;
+      setHasMore(data.Page.pageInfo.hasNextPage);
+      pageRef.current = nextPage;
+    } catch (e) {
+      console.error("Failed to fetch more anime:", e);
+    }
+  };
+
+  // Initial load
+  useEffect(() => {
+    pageRef.current = 0;
+    setAnimeList([]);
+    totalRef.current = 0;
+    loadMore();
+  }, [query, filters]);
+
+  // Hook to load more on scroll
+  const debouncedLoadMore = useRef(debounce(loadMore, 700)).current;
+  useInfiniteScroll(debouncedLoadMore, hasMore);
+
+  return (
+    <>
+      <div className="flex justify-between py-8 text-xl items-center">
+        <h2 className="font-bold">All Results</h2>
+        <p className="text-gray-400">{totalRef.current} results found</p>
+      </div>
+      {animeList.length > 0 ? (
+        <div className="grid grid-cols-6 gap-4">
+          {animeList.map((anime) => (
+            <div
+              key={anime.id}
+              className="overflow-hidden h-[35vh] rounded-2xl"
+            >
+              <AnimeCard anime={anime} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2">
+          <span className="text-blue-400/50 text-6xl">
+            <MdLocalMovies />
+          </span>
+          <h2 className="font-bold text-2xl">No results found.</h2>
+          <p className="text-gray-400">
+            No results match your current filter criteria. Try adjusting your
+            filters or search term.
+          </p>
+        </div>
+      )}
+    </>
+  );
+}

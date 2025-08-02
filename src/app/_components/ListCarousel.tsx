@@ -65,7 +65,7 @@ export default function ListCarousel({
           {animes.map((anime, idx) => (
             <li
               key={idx}
-              className="flex-none rounded-2xl overflow-hidden bg-red-200"
+              className="flex-none rounded-2xl overflow-hidden"
               style={{
                 width: `${100 / itemsPerSlide}%`,
               }}

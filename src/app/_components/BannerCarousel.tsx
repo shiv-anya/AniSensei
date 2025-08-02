@@ -31,20 +31,20 @@ const Carousel = ({ movies }) => {
     <div className="h-[80vh] relative w-full mx-auto overflow-hidden top-28 shadow-banner rounded-[2.5rem] mb-56">
       {/* Slides container */}
       <div
-        className="flex transition-transform duration-700 ease-in-out"
+        className="h-full flex transition-transform duration-700 ease-in-out"
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
-        {movies.map((movie, index) => (
+        {movies.map((anime, index) => (
           <div key={index} className="w-full flex-shrink-0">
             <Banner
-              name={movie.name}
-              date={movie.date}
-              type={movie.type}
-              rating={movie.rating}
-              about={movie.about}
-              img={movie.img}
+              name={anime.title.english}
+              date={anime.startDate}
+              type={anime.type}
+              rating={anime.averageScore}
+              about={anime.description}
+              img={anime.coverImage.extraLarge}
             />
           </div>
         ))}
