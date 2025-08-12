@@ -2,10 +2,35 @@
 
 import { useEffect, useRef, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import AnimesList from "../_components/AnimesList";
+import { SEARCH_QUERY } from "../_graphql/queries";
+import { useSearchParams } from "next/navigation";
+
+function useDebounce(value, delay = 500) {
+  const [debounced, setDebounced] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebounced(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debounced;
+}
 
 export default function Search() {
+  const searchParams = useSearchParams();
+  const [searchInput, setSearchInput] = useState("");
+  const [format, setFormat] = useState(searchParams.get("format") || "");
   const searchRef = useRef(null);
   const [focus, setFocus] = useState(false);
+
+  const debouncedSearch = useDebounce(searchInput, 1000);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -18,8 +43,9 @@ export default function Search() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
-    <div className="w-[80%] mx-auto h-screen pb-[10vh]">
+    <div className="w-[80%] mx-auto h-auto pb-[40vh]">
       <div className="relative top-28">
         <div
           className={`flex w-full pl-4 rounded-2xl items-center border border-gray-600 ${
@@ -30,7 +56,9 @@ export default function Search() {
             <IoSearchOutline />
           </span>
           <input
+            value={searchInput}
             ref={searchRef}
+            onChange={(e) => setSearchInput(e.target.value)}
             onClick={() => setFocus(true)}
             className="w-full h-full rounded-2xl p-4 text-gray-300 outline-none"
             type="text"
@@ -38,23 +66,26 @@ export default function Search() {
             placeholder="Search for movies and tv shows"
           />
         </div>
+
         <div>
           <div className="text-sm flex gap-2 my-8">
-            <button className="px-6 py-2 border border-gray-600 rounded-xl hover:bg-blue-500 transition duration-400">
-              All
-            </button>
-            <button className="px-6 py-2 border border-gray-600 rounded-xl hover:bg-blue-500 transition duration-400">
-              Movie
-            </button>
-            <button className="px-6 py-2 border border-gray-600 rounded-xl hover:bg-blue-500 transition duration-400">
-              TV
-            </button>
+            {["", "MOVIE", "TV"].map((type) => (
+              <button
+                key={type}
+                className={`px-6 py-2 border border-gray-600 rounded-xl hover:bg-blue-500 transition duration-400 ${
+                  format === type ? "bg-blue-400" : ""
+                }`}
+                onClick={() => setFormat(type)}
+              >
+                {type === "" ? "All" : type}
+              </button>
+            ))}
           </div>
-          <div>
-            <p className="text-center text-gray-400">
-              Search to get results...
-            </p>
-          </div>
+
+          <AnimesList
+            query={SEARCH_QUERY}
+            filters={{ search: debouncedSearch, format }}
+          />
         </div>
       </div>
     </div>

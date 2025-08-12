@@ -7,6 +7,7 @@ import { MdExplore } from "react-icons/md";
 import { LiaTheaterMasksSolid } from "react-icons/lia";
 import { FaRegUser } from "react-icons/fa6";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", icon: <IoHomeOutline />, href: "/" },
@@ -17,9 +18,10 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
+  const pathname = usePathname();
   const [isHoverElement, setIsHoverElement] = useState("");
   return (
-    <nav className="rounded-lg w-[95%] h-[14vh] left-[32px] text-white flex justify-between items-center bg-[rgba(0,0,0,0.8)] border border-gray-600 mt-4 fixed bottom-4 z-10 backdrop-blur-sm">
+    <nav className="rounded-lg w-[95%] h-[14vh] left-[32px] text-white flex justify-between items-center bg-[rgba(0,0,0,0.8)] border border-gray-600 mt-4 fixed bottom-4 z-50 backdrop-blur-sm">
       <ul className="w-full list-none flex justify-between items-center">
         {navLinks.map((item) => (
           <li
@@ -34,6 +36,7 @@ export const Navbar = () => {
                   className={`${
                     item.name === "Profile" ? "text-sm" : "text-lg"
                   } 
+                  ${pathname === item.href ? "bg-blue-500/50" : ""}
                   p-2 rounded-xl
                   ${
                     isHoverElement === item.name &&

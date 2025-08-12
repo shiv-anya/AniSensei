@@ -15,6 +15,7 @@ export default function AnimesList({ query, filters }) {
   const sort = filters?.sort_by || undefined;
   const format = filters?.format || undefined;
   const status = filters?.status || undefined;
+  const search = filters?.search || undefined;
 
   const loadMore = async () => {
     try {
@@ -27,9 +28,10 @@ export default function AnimesList({ query, filters }) {
           ...(sort && { sort: [sort] }),
           ...(format && { format }),
           ...(status && { status }),
+          ...(search && { search }),
         },
       });
-
+      console.log(filters);
       setAnimeList((prev) => [...prev, ...data.Page.media]);
       totalRef.current = data.Page.pageInfo.total;
       setHasMore(data.Page.pageInfo.hasNextPage);
@@ -40,12 +42,27 @@ export default function AnimesList({ query, filters }) {
   };
 
   // Initial load
+  // useEffect(() => {
+  //   console.log("meow");
+  //   pageRef.current = 0;
+  //   setAnimeList([]);
+  //   totalRef.current = 0;
+  //   loadMore();
+  // }, [query, filters]);
+
   useEffect(() => {
+    // Reset before triggering new load
     pageRef.current = 0;
-    setAnimeList([]);
     totalRef.current = 0;
-    loadMore();
-  }, [query, filters]);
+    setAnimeList([]);
+
+    // Small delay to allow state to flush
+    const timer = setTimeout(() => {
+      loadMore(); // only trigger once reset is fully complete
+    }, 50); // even 50ms is enough
+
+    return () => clearTimeout(timer); // cleanup
+  }, [query, JSON.stringify(filters)]);
 
   // Hook to load more on scroll
   const debouncedLoadMore = useRef(debounce(loadMore, 700)).current;

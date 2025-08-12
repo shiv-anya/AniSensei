@@ -226,3 +226,38 @@ export const FILTER_QUERY = `query ($page: Int, $perPage: Int, $sort: [MediaSort
   }
 }
 `;
+
+export const SEARCH_QUERY = `
+  query ($page: Int, $perPage: Int, $search: String, $format: MediaFormat) {
+    Page(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        currentPage
+        lastPage
+        hasNextPage
+        perPage
+      }
+      media(
+        type: ANIME
+        search: $search
+        format: $format
+      ) {
+        id
+        title {
+          romaji
+          english
+        }
+        format
+        averageScore
+        startDate {
+          year
+          month
+          day
+        }
+        coverImage {
+          extraLarge
+        }
+      }
+    }
+  }
+`;

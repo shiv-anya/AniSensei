@@ -18,11 +18,10 @@ const Carousel = ({ movies }) => {
     setCurrentIndex(newIndex);
   };
 
-  // Auto-slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       goToNext();
-    }, 50000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -53,7 +52,7 @@ const Carousel = ({ movies }) => {
       {/* Left Arrow */}
       <button
         onClick={goToPrevious}
-        className="absolute top-[55%] left-4 transform -translate-y-1/2 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full transition duration-400 ease-in hover:bg-blue-500/70 z-10"
+        className="absolute top-[55%] left-4 transform -translate-y-1/2 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full transition duration-400 ease-in hover:bg-blue-500/70"
       >
         <FaChevronLeft size={20} />
       </button>
@@ -61,7 +60,7 @@ const Carousel = ({ movies }) => {
       {/* Right Arrow */}
       <button
         onClick={goToNext}
-        className="absolute top-[55%] right-4 transform -translate-y-1/2 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full transition duration-700 ease-in hover:bg-blue-500/70 z-10"
+        className="absolute top-[55%] right-4 transform -translate-y-1/2 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full transition duration-700 ease-in hover:bg-blue-500/70"
       >
         <FaChevronRight size={20} />
       </button>
