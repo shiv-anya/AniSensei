@@ -40,7 +40,7 @@ const Carousel = ({ movies }) => {
             <Banner
               name={anime.title.english}
               date={anime.startDate}
-              type={anime.type}
+              type={anime.format}
               rating={anime.averageScore}
               about={anime.description}
               img={anime.coverImage.extraLarge}

@@ -8,6 +8,7 @@ export const BANNER_ANIMES_QUERY = `query ($ids: [Int]) {
           native
         }
         type
+        format
         startDate {
           year
           month
@@ -32,6 +33,7 @@ export const TRENDING_ANIMES_QUERY = `query {
           english
           native
         }
+        format
         type
         startDate {
           year
@@ -52,7 +54,8 @@ export const NEW_RELEASED_ANIMES_QUERY = `query {
       romaji
         english
       }
-      type        
+      type
+      format        
       startDate {
         year
       }
@@ -260,4 +263,85 @@ export const SEARCH_QUERY = `
       }
     }
   }
+`;
+
+export const SEARCH_BY_ID = `query ($id: Int) {
+  Media(id: $id, type: ANIME) {
+    id
+    title {
+      romaji
+      english
+      native
+    }
+    coverImage {
+      large
+    }
+    description(asHtml: false)
+    duration        
+    countryOfOrigin   
+    format
+    bannerImage
+    episodes
+    nextAiringEpisode {
+      episode
+    }
+    trailer {
+      id
+      site
+      thumbnail
+    }
+    genres
+    averageScore
+    status
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    recommendations {
+      edges {
+        node {
+          mediaRecommendation {
+            id
+            title {
+              romaji
+              english
+            }
+          }
+        }
+      }
+    }
+    studios {
+      nodes {
+        name
+      }
+    }
+  }
+}
+`;
+
+export const GENRE_RECOMMENDATIONS = `query ($page: Int, $perPage: Int, $genres: [String]) {
+  Page(page: $page, perPage: $perPage) {
+    media(genre_in: $genres, type: ANIME) {
+      id
+      title {
+        romaji
+        english
+      }
+      format
+      genres
+      startDate {
+        year
+      }
+      coverImage {
+        extraLarge
+      }
+    }
+  }
+}
 `;

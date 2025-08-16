@@ -24,7 +24,7 @@ export default function Dropdown({ label, options, value, onChange }) {
   }, []);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" key={label}>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="text-white px-4 py-2 rounded-md flex justify-between items-center w-48 capitalize focus:shadow-dropdown shadow-blue-500"

@@ -40,40 +40,6 @@ export default async function Home() {
 
   const whatsPopularAnimes = await fetchAniList({ query: WHATS_POPULAR_QUERY });
 
-  const dummyAnimes = [
-    {
-      title: "Demon Slayer",
-      image: "/assets/poster.jpg",
-      year: 2020,
-      type: "Movie",
-    },
-    {
-      title: "Attack on Titan",
-      image: "/assets/poster.jpg",
-      year: 2020,
-      type: "Movie",
-    },
-    {
-      title: "Jujutsu Kaisen",
-      image: "/assets/poster.jpg",
-      year: 2020,
-      type: "Movie",
-    },
-    {
-      title: "One Piece",
-      image: "/assets/poster.jpg",
-      year: 2020,
-      type: "Movie",
-    },
-    {
-      title: "Spy x Family",
-      image: "/assets/poster.jpg",
-      year: 2020,
-      type: "Movie",
-    },
-    { title: "Naruto", image: "/assets/poster.jpg", year: 2020, type: "Movie" },
-  ];
-
   return (
     <div className="w-[80%] mx-auto pb-[10vh]">
       <BannerCarousel movies={finalBannerAnimes} />

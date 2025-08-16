@@ -5,14 +5,29 @@ import { CiCalendar } from "react-icons/ci";
 import { MdOutlineMovieFilter } from "react-icons/md";
 import Link from "next/link";
 
+enum Month {
+  "Jan",
+  "Feb",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+}
+
 export const Banner = ({ name, date, type, rating, about, img }) => {
   const words = about.split(" ");
   const first20 = words.slice(0, 20);
   const result = first20.join(" ");
   const day = String(date.day).padStart(2, "0");
-  const month = String(date.month).padStart(2, "0");
+  const month = Month[date.month - 1];
   const year = date.year;
-  const formattedDate = `${day}-${month}-${year}`;
+  const formattedDate = `${day} ${month}, ${year}`;
 
   return (
     <div

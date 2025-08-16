@@ -31,7 +31,7 @@ export default function AnimesList({ query, filters }) {
           ...(search && { search }),
         },
       });
-      console.log(filters);
+
       setAnimeList((prev) => [...prev, ...data.Page.media]);
       totalRef.current = data.Page.pageInfo.total;
       setHasMore(data.Page.pageInfo.hasNextPage);
@@ -40,15 +40,6 @@ export default function AnimesList({ query, filters }) {
       console.error("Failed to fetch more anime:", e);
     }
   };
-
-  // Initial load
-  // useEffect(() => {
-  //   console.log("meow");
-  //   pageRef.current = 0;
-  //   setAnimeList([]);
-  //   totalRef.current = 0;
-  //   loadMore();
-  // }, [query, filters]);
 
   useEffect(() => {
     // Reset before triggering new load
