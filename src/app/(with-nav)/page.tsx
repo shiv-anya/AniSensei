@@ -1,5 +1,3 @@
-import BannerCarousel from "./_components/BannerCarousel";
-import ListCarousel from "./_components/ListCarousel";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoIosTrendingUp } from "react-icons/io";
@@ -7,7 +5,10 @@ import { MdOutlineLocalMovies } from "react-icons/md";
 import { PiPopcorn } from "react-icons/pi";
 import { FaRegStar } from "react-icons/fa";
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
-import { fetchAniList } from "./_lib/fetchAniList";
+import { fetchAniList } from "../_lib/fetchAniList";
+import ListCarousel from "../_components/ListCarousel";
+import BannerCarousel from "../_components/BannerCarousel";
+
 import {
   BANNER_ANIMES_QUERY,
   COMING_SOON_ANIMES_QUERY,
@@ -16,7 +17,7 @@ import {
   TOP_RATED_ANIMES,
   TRENDING_ANIMES_QUERY,
   WHATS_POPULAR_QUERY,
-} from "./_graphql/queries";
+} from "../_graphql/queries";
 
 export default async function Home() {
   const bannerAnimes = await fetchAniList({ query: BANNER_ANIMES_QUERY });

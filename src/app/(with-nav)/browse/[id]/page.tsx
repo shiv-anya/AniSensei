@@ -57,7 +57,6 @@ export default function AnimeInfo() {
     .replace(/<\/?[^>]+(>|$)/g, "");
   const getAnimeById = async (id) => {
     const data = await fetchAniList({ query: SEARCH_BY_ID, variables: { id } });
-
     setAnime(data.Media);
   };
   useEffect(() => {
@@ -83,10 +82,16 @@ export default function AnimeInfo() {
               />
             )}
             <div className="w-full mt-5 flex flex-col gap-2">
-              <button className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500">
+              <Link
+                href={`/browse/${anime?.id}/${anime?.title.english
+                  .split(" ")
+                  .join("-")
+                  .toLowerCase()}`}
+                className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
+              >
                 <IoPlayOutline size={18} />
                 Watch Now
-              </button>
+              </Link>
               {anime?.trailer?.site === "youtube" && (
                 <Link
                   href={`https://www.youtube.com/watch?v=${anime?.trailer.id}`}
@@ -168,7 +173,7 @@ export default function AnimeInfo() {
                 }`}
               >
                 <button
-                  className={`${
+                  className={`cursor-pointer ${
                     anime?.format === "MOVIE" ? "w-full" : "w-1/2"
                   } px-4 py-1 rounded-lg ${
                     activeTab === "overview" ? "bg-blue-500" : ""
@@ -179,7 +184,7 @@ export default function AnimeInfo() {
                 </button>
                 {anime?.format !== "MOVIE" && (
                   <button
-                    className={`w-1/2 px-4 py-1 rounded-lg ${
+                    className={`cursor-pointer w-1/2 px-4 py-1 rounded-lg ${
                       activeTab === "seasons" ? "bg-blue-500" : ""
                     }`}
                     onClick={() => setActiveTab("seasons")}

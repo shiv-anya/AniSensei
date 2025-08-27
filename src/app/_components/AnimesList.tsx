@@ -16,6 +16,7 @@ export default function AnimesList({ query, filters }) {
   const format = filters?.format || undefined;
   const status = filters?.status || undefined;
   const search = filters?.search || undefined;
+  const genres = filters?.genres || undefined;
 
   const loadMore = async () => {
     try {
@@ -29,6 +30,7 @@ export default function AnimesList({ query, filters }) {
           ...(format && { format }),
           ...(status && { status }),
           ...(search && { search }),
+          ...(genres && { genres }),
         },
       });
 
@@ -84,7 +86,7 @@ export default function AnimesList({ query, filters }) {
           <h2 className="font-bold text-2xl">No results found.</h2>
           <p className="text-gray-400">
             No results match your current filter criteria. Try adjusting your
-            filters or search term.
+            filters, genres selection or search term.
           </p>
         </div>
       )}

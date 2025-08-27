@@ -36,7 +36,15 @@ export const Navbar = () => {
                   className={`${
                     item.name === "Profile" ? "text-sm" : "text-lg"
                   } 
-                  ${pathname === item.href ? "bg-blue-500/50" : ""}
+                  ${
+                    (
+                      item.href === "/"
+                        ? pathname === "/"
+                        : pathname.includes(item.href)
+                    )
+                      ? "bg-blue-500/50"
+                      : ""
+                  }
                   p-2 rounded-xl
                   ${
                     isHoverElement === item.name &&

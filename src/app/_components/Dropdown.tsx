@@ -6,7 +6,9 @@ export default function Dropdown({ label, options, value, onChange }) {
   const buttonRef = useRef(null);
 
   const handleSelect = (key, value) => {
-    onChange(key, value);
+    if (key === "sort by") {
+      onChange("sort_by", value);
+    } else onChange(key, value);
     setIsOpen(false);
   };
 
@@ -24,14 +26,13 @@ export default function Dropdown({ label, options, value, onChange }) {
   }, []);
 
   return (
-    <div className="relative inline-block text-left" key={label}>
+    <div className="relative inline-block text-left">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="text-white px-4 py-2 rounded-md flex justify-between items-center w-48 capitalize focus:shadow-dropdown shadow-blue-500"
         ref={buttonRef}
       >
-        {value || label === "sort_by" ? "sort by" : label}{" "}
-        {/* show selected value or fallback label */}
+        {value || label} {/* show selected value or fallback label */}
         <span className="ml-2">
           <RiExpandUpDownFill />
         </span>

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import AnimesList from "../_components/AnimesList";
-import { SEARCH_QUERY } from "../_graphql/queries";
+import AnimesList from "../../_components/AnimesList";
+import { SEARCH_QUERY } from "../../_graphql/queries";
 import { useSearchParams } from "next/navigation";
 
 function useDebounce(value, delay = 500) {

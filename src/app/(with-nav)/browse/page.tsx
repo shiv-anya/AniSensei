@@ -3,11 +3,11 @@ import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { MdLocalMovies } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
-import AnimesList from "../_components/AnimesList";
-import Dropdown from "../_components/Dropdown";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { ALL_ANIME_QUERY, FILTER_QUERY } from "../_graphql/queries";
+import { ALL_ANIME_QUERY, FILTER_QUERY } from "../../_graphql/queries";
+import AnimesList from "@/app/_components/AnimesList";
+import Dropdown from "@/app/_components/Dropdown";
 
 export default function Browse() {
   const router = useRouter();
@@ -83,7 +83,7 @@ export default function Browse() {
                 value={filters.format}
               />
               <Dropdown
-                label="sort_by"
+                label="sort by"
                 options={[
                   { name: "popularity", value: "POPULARITY_DESC" },
                   { name: "score", value: "SCORE_DESC" },

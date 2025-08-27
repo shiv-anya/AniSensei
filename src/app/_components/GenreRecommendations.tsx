@@ -22,7 +22,7 @@ export default function GenreRecommendations({ genres }) {
     <section className="pt-16">
       <ListCarousel
         animes={recommendedAnimes}
-        title={"you may like"}
+        title={"you may also like"}
         icon={<RiStarSmileLine />}
         height={"40"}
         itemsCountPerPage={7}

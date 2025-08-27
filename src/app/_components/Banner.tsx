@@ -20,7 +20,7 @@ enum Month {
   "Dec",
 }
 
-export const Banner = ({ name, date, type, rating, about, img }) => {
+export const Banner = ({ name, date, type, rating, about, img, id }) => {
   const words = about.split(" ");
   const first20 = words.slice(0, 20);
   const result = first20.join(" ");
@@ -62,7 +62,7 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
         </div>
         <div className="bg-[rgba(0,0,0,0.3)] backdrop-blur-sm py-3 px-5 rounded-xl border border-gray-600 text-lg">
           {result + "... "}
-          <Link href={"/"} className="text-blue-500">
+          <Link href={`/browse/${id}`} className="text-blue-500">
             Read more.
           </Link>
         </div>
@@ -76,12 +76,16 @@ export const Banner = ({ name, date, type, rating, about, img }) => {
             </span>
             Watch Now
           </button>
-          <button className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-110 hover:bg-gray-600/50 duration-700">
+
+          <Link
+            href={`/browse/${id}`}
+            className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-110 hover:bg-gray-600/50 duration-700"
+          >
             <span className="text-xl">
               <IoInformationCircleOutline />
             </span>
             More Details
-          </button>
+          </Link>
         </div>
       </div>
       <div className="w-[40%] h-full z-4 overflow-hidden">

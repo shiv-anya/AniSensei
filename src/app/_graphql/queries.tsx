@@ -327,6 +327,13 @@ export const SEARCH_BY_ID = `query ($id: Int) {
 
 export const GENRE_RECOMMENDATIONS = `query ($page: Int, $perPage: Int, $genres: [String]) {
   Page(page: $page, perPage: $perPage) {
+    pageInfo {
+          total
+          currentPage
+          lastPage
+          hasNextPage
+          perPage
+        }
     media(genre_in: $genres, type: ANIME) {
       id
       title {

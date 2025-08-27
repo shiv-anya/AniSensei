@@ -21,7 +21,7 @@ const Carousel = ({ movies }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       goToNext();
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -44,6 +44,7 @@ const Carousel = ({ movies }) => {
               rating={anime.averageScore}
               about={anime.description}
               img={anime.coverImage.extraLarge}
+              id={anime.id}
             />
           </div>
         ))}
