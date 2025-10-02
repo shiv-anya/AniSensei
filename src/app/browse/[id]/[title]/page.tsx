@@ -96,7 +96,6 @@ export default function VideoPlayer() {
   };
 
   const playbackRateHandler = (val) => {
-    console.log(val);
     setPlayerState((prev) => ({ ...prev, playbackRate: val }));
   };
 

@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         hostname: "s4.anilist.co",
         pathname: "/file/anilistcdn/**",
       },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
     ],
   },
   devIndicators: false,

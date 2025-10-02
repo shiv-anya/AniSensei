@@ -1,4 +1,3 @@
-// fetchAniList.js
 export async function fetchAniList({ query, variables = {} }) {
   const res = await fetch("https://graphql.anilist.co", {
     method: "POST",

@@ -1,5 +1,6 @@
 import { Header } from "../_components/Header";
 import { Navbar } from "../_components/Navbar";
+import { AuthProvider } from "../_context/AuthContext";
 
 export default function WithNavLayout({
   children,
@@ -10,7 +11,9 @@ export default function WithNavLayout({
     <>
       <Header />
       <Navbar />
-      <main>{children}</main>
+      <AuthProvider>
+        <main>{children}</main>
+      </AuthProvider>
     </>
   );
 }
