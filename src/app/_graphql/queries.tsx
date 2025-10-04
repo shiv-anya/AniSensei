@@ -274,7 +274,7 @@ export const SEARCH_BY_ID = `query ($id: Int) {
       native
     }
     coverImage {
-      large
+      extraLarge
     }
     description(asHtml: false)
     duration        

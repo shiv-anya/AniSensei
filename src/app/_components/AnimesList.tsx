@@ -1,7 +1,6 @@
 "use client";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdLocalMovies } from "react-icons/md";
-import { ALL_ANIME_QUERY } from "../_graphql/queries";
 import { fetchAniList } from "../_lib/fetchAniList";
 import useInfiniteScroll from "../_hooks/useInfiniteScroll";
 import AnimeCard from "./AnimeCard";

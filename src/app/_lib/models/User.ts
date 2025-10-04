@@ -1,6 +1,17 @@
 "use server";
 import mongoose from "mongoose";
 
+const AnimeSnapshotSchema = new mongoose.Schema(
+  {
+    id: { type: Number }, // AniList / internal ID
+    coverImage: { type: String }, // extraLarge URL
+    format: { type: String }, // TV, MOVIE, OVA etc.
+    year: { type: Number }, // startDate.year
+    title: { type: String }, // english OR romaji
+  },
+  { _id: false }
+); // no extra _id for subdocs
+
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -18,12 +29,11 @@ const UserSchema = new mongoose.Schema(
       default: "https://picsum.photos/200/300", // you can store path or cloud URL
     },
 
-    // References (one-to-many)
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
+    favorites: [AnimeSnapshotSchema],
 
     watchlist: [
       {
-        animeId: { type: mongoose.Schema.Types.ObjectId, ref: "Anime" },
+        anime: AnimeSnapshotSchema,
         status: {
           type: String,
           enum: ["planned", "watching", "completed"],
@@ -35,8 +45,8 @@ const UserSchema = new mongoose.Schema(
 
     history: [
       {
-        animeId: { type: mongoose.Schema.Types.ObjectId, ref: "Anime" },
-        progress: { type: Number, default: 0 }, // percentage watched
+        anime: AnimeSnapshotSchema,
+        progress: { type: Number, default: 0 }, // % watched
         lastWatched: { type: Date, default: Date.now },
       },
     ],

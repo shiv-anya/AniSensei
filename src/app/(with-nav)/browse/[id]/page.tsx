@@ -19,6 +19,10 @@ import { MdOutlineMovieFilter } from "react-icons/md";
 import { CiCalendar } from "react-icons/ci";
 import { TbTag } from "react-icons/tb";
 import GenreRecommendations from "@/app/_components/GenreRecommendations";
+import { addToWatchlist, removeFromWatchlist } from "@/app/actions/watchlist";
+import { BeatLoader } from "react-spinners";
+import { useAuth } from "@/app/_context/AuthContext";
+import { addToFavorites, removeFromFavorites } from "@/app/actions/favorites";
 
 enum Month {
   "Jan",
@@ -44,9 +48,23 @@ function formatDuration(totalMinutes) {
 }
 
 export default function AnimeInfo() {
+  const userInfo = useAuth();
   const [anime, setAnime] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [isPendingWatchlist, setIsPendingWatchlist] = useState(false);
+  const [isPendingFavorites, setIsPendingFavorites] = useState(false);
   const { id } = useParams();
+  let isAnimeInWatchlist;
+  let isAnimeInFavorites;
+  if (userInfo?.user?.watchlist) {
+    isAnimeInWatchlist = userInfo?.user?.watchlist.find(
+      (w) => w.anime.id.toString() === id.toString()
+    );
+  }
+  const [isSuccessWatchlist, setIsSuccessWatchlist] =
+    useState(isAnimeInWatchlist);
+  const [isSuccessFavorites, setIsSuccessFavorites] =
+    useState(isAnimeInFavorites);
   const day = String(anime?.startDate.day).padStart(2, "0");
   const month = Month[anime?.startDate.month - 1];
   const year = anime?.startDate.year;
@@ -59,9 +77,35 @@ export default function AnimeInfo() {
     const data = await fetchAniList({ query: SEARCH_BY_ID, variables: { id } });
     setAnime(data.Media);
   };
+  const handleAddAnimeToFavorites = async () => {
+    setIsPendingFavorites(true);
+    const res = await addToFavorites(userInfo?.user?.email, anime);
+    if (res.success) setIsSuccessFavorites(true);
+    setIsPendingFavorites(false);
+  };
+  const handleAddAnimeToWatchList = async () => {
+    setIsPendingWatchlist(true);
+    const res = await addToWatchlist(userInfo?.user?.email, anime);
+    if (res.success) {
+      setIsSuccessWatchlist(true);
+    }
+    setIsPendingWatchlist(false);
+  };
+  const handleRemoveFromFavorites = async () => {
+    setIsPendingFavorites(true);
+    const res = await removeFromFavorites(userInfo?.user?.email, anime?.id);
+    setIsSuccessFavorites(false);
+    setIsPendingFavorites(false);
+  };
+  const handleRemoveFromWatchlist = async () => {
+    setIsPendingWatchlist(true);
+    const res = await removeFromWatchlist(userInfo?.user?.email, anime?.id);
+    if (res.success) setIsSuccessWatchlist(false);
+    setIsPendingWatchlist(false);
+  };
   useEffect(() => {
     getAnimeById(id);
-  }, []);
+  }, [id]);
   return (
     <section className="h-auto pt-30 pb-10">
       <div className="w-[80%] mx-auto">
@@ -74,7 +118,7 @@ export default function AnimeInfo() {
           <aside className="w-[20%]">
             {anime && (
               <Image
-                src={anime?.coverImage.large}
+                src={anime?.coverImage?.extraLarge}
                 width={150}
                 height={200}
                 alt="cover image"
@@ -105,14 +149,64 @@ export default function AnimeInfo() {
               )}
             </div>
             <div className="my-5 flex flex-col gap-2">
-              <button className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm">
-                <AiOutlineHeart size={18} />
-                <span>Favorite</span>
-              </button>
-              <button className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm">
-                <BsBookmark size={15} />
-                <span>Watch Later</span>
-              </button>
+              {isSuccessFavorites ? (
+                <button
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm"
+                  onClick={handleRemoveFromFavorites}
+                >
+                  {isPendingFavorites ? (
+                    <BeatLoader size={8} color="white" />
+                  ) : (
+                    <>
+                      <AiOutlineHeart size={18} className="text-red-400" />
+                      <span>Loved</span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm"
+                  onClick={handleAddAnimeToFavorites}
+                >
+                  {isPendingFavorites ? (
+                    <BeatLoader size={8} color="white" />
+                  ) : (
+                    <>
+                      <AiOutlineHeart size={15} />
+                      <span>Favorite</span>
+                    </>
+                  )}
+                </button>
+              )}
+              {isSuccessWatchlist ? (
+                <button
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm cursor-pointer"
+                  onClick={handleRemoveFromWatchlist}
+                >
+                  {isPendingWatchlist ? (
+                    <BeatLoader size={8} color="white" />
+                  ) : (
+                    <>
+                      <BsBookmarkCheck size={15} className="text-blue-500" />
+                      <span>Listed</span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm cursor-pointer"
+                  onClick={handleAddAnimeToWatchList}
+                >
+                  {isPendingWatchlist ? (
+                    <BeatLoader size={8} color="white" />
+                  ) : (
+                    <>
+                      <BsBookmark size={15} />
+                      <span>Watch Later</span>
+                    </>
+                  )}
+                </button>
+              )}
             </div>
             <div className="text-sm flex flex-col gap-5 bg-gray-900 backdrop-blur-sm border border-gray-600 px-4 py-5 rounded-lg">
               <h2 className="text-blue-500 flex gap-2 items-center">

@@ -7,7 +7,6 @@ export const editUserProfile = async ({ email, name, password, avatar }) => {
   await connectDB();
   const user = await User.findOne({ email: email });
   if (!user) return;
-  console.log(email, name, password, avatar);
   // Update fields dynamically
   if (name) user.name = name;
   if (avatar) user.avatar = avatar;

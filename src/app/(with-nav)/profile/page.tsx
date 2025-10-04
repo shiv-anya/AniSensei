@@ -1,5 +1,7 @@
 "use client";
 import { EditProfile } from "@/app/_components/EditProfile";
+import { Favorites } from "@/app/_components/Favorites";
+import { WatchList } from "@/app/_components/WatchList";
 import { useAuth } from "@/app/_context/AuthContext";
 import { logoutAction } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
@@ -80,6 +82,8 @@ export default function ProfilePage() {
         </aside>
         <div className="w-3/4 p-16">
           {currentNav === "Edit Profile" && <EditProfile user={user} />}
+          {currentNav === "WatchList" && <WatchList />}
+          {currentNav === "Favorites" && <Favorites />}
         </div>
       </div>
     </section>

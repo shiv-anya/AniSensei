@@ -2,8 +2,7 @@
 
 import mongoose from "mongoose";
 
-const MONGODB_URI =
-  "mongodb+srv://sg90883:random@cluster0.nuf8fxj.mongodb.net/anisensei";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 let isConnected = false;
 
