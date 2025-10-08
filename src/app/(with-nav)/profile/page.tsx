@@ -42,16 +42,16 @@ export default function ProfilePage() {
   if (loading)
     return (
       <section className="h-screen flex justify-center items-center">
-        <HashLoader size={30} className="text-blue-500" />
+        <HashLoader size={30} className="#60A5FA" />
       </section>
     );
   if (!user) return null;
 
   return (
-    <section className="h-auto py-32 flex justify-center">
-      <div className="h-screen bg-gray-900/80 rounded-xl w-[70%] backdrop-blur-sm flex shadow-banner">
+    <section className="min-h-screen flex justify-center items-center py-32 w-full max-w-screen-xl">
+      <div className="h-[700px] w-[80%] bg-gray-900/80 rounded-xl max-h-[600px] backdrop-blur-sm flex shadow-banner">
         <aside className="w-1/4 h-full bg-black/50 rounded-xl">
-          <div className="w-full h-[45%]">
+          <div className="w-full">
             <div
               className={`h-48 w-full rounded-t-xl bg-cover bg-no-repeat relative`}
               style={{ backgroundImage: `url(${user.avatar})` }}
@@ -65,7 +65,7 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
-          <ul className="h-[55%] rounded-b-xl flex flex-col justify-between p-4 py-8">
+          <ul className="rounded-b-xl flex flex-col gap-8 p-4 py-8">
             {list.map((el) => (
               <li
                 key={el.name}

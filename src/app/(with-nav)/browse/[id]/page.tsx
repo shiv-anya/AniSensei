@@ -165,8 +165,14 @@ export default function AnimeInfo() {
                 </button>
               ) : (
                 <button
-                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm"
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm disabled:bg-gray-700 disabled:cursor-not-allowed"
                   onClick={handleAddAnimeToFavorites}
+                  disabled={!userInfo.user}
+                  title={
+                    !userInfo.user
+                      ? "login or signup to track your own favorites"
+                      : ""
+                  }
                 >
                   {isPendingFavorites ? (
                     <BeatLoader size={8} color="white" />
@@ -194,8 +200,14 @@ export default function AnimeInfo() {
                 </button>
               ) : (
                 <button
-                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm cursor-pointer"
+                  className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm cursor-pointer disabled:bg-gray-700 disabled:cursor-not-allowed"
                   onClick={handleAddAnimeToWatchList}
+                  disabled={!userInfo.user}
+                  title={
+                    !userInfo.user
+                      ? "login or signup to track your own watchlist"
+                      : ""
+                  }
                 >
                   {isPendingWatchlist ? (
                     <BeatLoader size={8} color="white" />

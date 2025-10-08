@@ -71,14 +71,14 @@ export default function AnimesList({ query, filters }) {
           {animeList.map((anime) => (
             <div
               key={anime.id}
-              className="overflow-hidden h-[35vh] rounded-2xl"
+              className="overflow-hidden h-[35vh] max-h-72 rounded-2xl"
             >
               <AnimeCard anime={anime} />
             </div>
           ))}
         </div>
       ) : (
-        <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2">
+        <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2 max-h-96">
           <span className="text-blue-400/50 text-6xl">
             <MdLocalMovies />
           </span>

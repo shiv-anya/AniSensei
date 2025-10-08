@@ -17,8 +17,6 @@ export default function ListCarousel({
   const [itemsPerSlide, setItemsPerSlide] = useState(itemsCountPerPage);
   const totalItems = animes.length;
 
-  console.log(maxH);
-
   const handleNext = () => {
     setCurrentIndex((prev) =>
       prev + itemsPerSlide >= totalItems ? 0 : prev + itemsPerSlide

@@ -42,7 +42,7 @@ export default async function Home() {
   const whatsPopularAnimes = await fetchAniList({ query: WHATS_POPULAR_QUERY });
 
   return (
-    <div className="w-[80%] mx-auto pb-[10vh]">
+    <div className="w-[80%] mx-auto pb-[10vh] max-w-screen-xl">
       <BannerCarousel movies={finalBannerAnimes} />
       {/* <ListCarousel
         animes={dummyAnimes}
@@ -57,7 +57,7 @@ export default async function Home() {
         icon={<IoIosTrendingUp />}
         height={"80"}
         itemsCountPerPage={4}
-        maxH={500}
+        maxH={600}
       />
       <ListCarousel
         animes={newReleasedAnimes.Page.media}
@@ -73,7 +73,7 @@ export default async function Home() {
         icon={<MdOutlineLocalMovies />}
         height={"80"}
         itemsCountPerPage={4}
-        maxH={500}
+        maxH={600}
       />
       <ListCarousel
         animes={comingSoonAnimes.Page.media}
@@ -81,7 +81,7 @@ export default async function Home() {
         icon={<PiPopcorn />}
         height={"80"}
         itemsCountPerPage={4}
-        maxH={500}
+        maxH={600}
       />
       <ListCarousel
         animes={topRatedAnimes.Page.media}
@@ -89,7 +89,7 @@ export default async function Home() {
         icon={<FaRegStar />}
         height={"80"}
         itemsCountPerPage={4}
-        maxH={500}
+        maxH={600}
       />
       <ListCarousel
         animes={whatsPopularAnimes.Page.media}
