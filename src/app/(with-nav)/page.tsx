@@ -57,6 +57,7 @@ export default async function Home() {
         icon={<IoIosTrendingUp />}
         height={"80"}
         itemsCountPerPage={4}
+        maxH={500}
       />
       <ListCarousel
         animes={newReleasedAnimes.Page.media}
@@ -64,6 +65,7 @@ export default async function Home() {
         icon={<IoAddCircleOutline />}
         height={"50"}
         itemsCountPerPage={2}
+        maxH={350}
       />
       <ListCarousel
         animes={popularShows.Page.media}
@@ -71,6 +73,7 @@ export default async function Home() {
         icon={<MdOutlineLocalMovies />}
         height={"80"}
         itemsCountPerPage={4}
+        maxH={500}
       />
       <ListCarousel
         animes={comingSoonAnimes.Page.media}
@@ -78,6 +81,7 @@ export default async function Home() {
         icon={<PiPopcorn />}
         height={"80"}
         itemsCountPerPage={4}
+        maxH={500}
       />
       <ListCarousel
         animes={topRatedAnimes.Page.media}
@@ -85,6 +89,7 @@ export default async function Home() {
         icon={<FaRegStar />}
         height={"80"}
         itemsCountPerPage={4}
+        maxH={500}
       />
       <ListCarousel
         animes={whatsPopularAnimes.Page.media}
@@ -92,6 +97,7 @@ export default async function Home() {
         icon={<MdOutlineLocalFireDepartment />}
         height={"35"}
         itemsCountPerPage={3}
+        maxH={250}
       />
     </div>
   );

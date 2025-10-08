@@ -10,11 +10,14 @@ export default function ListCarousel({
   title,
   icon,
   height,
+  maxH,
   itemsCountPerPage,
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerSlide, setItemsPerSlide] = useState(itemsCountPerPage);
   const totalItems = animes.length;
+
+  console.log(maxH);
 
   const handleNext = () => {
     setCurrentIndex((prev) =>
@@ -34,7 +37,10 @@ export default function ListCarousel({
   };
 
   return (
-    <section className={`w-full mb-32`} style={{ height: `${height}vh` }}>
+    <section
+      className={`w-full mb-32`}
+      style={{ height: `${height}vh`, maxHeight: `${maxH}px` }}
+    >
       <div className="h-[10%] text-2xl flex justify-between py-2 mb-8 items-center">
         <div className="flex gap-2 items-center">
           <span className="hover:animate-shake text-blue-500">{icon}</span>

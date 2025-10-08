@@ -35,7 +35,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
       style={{ backgroundImage: `url(${img})` }}
     >
       <div className="h-full rounded-[2.5rem] w-full bg-[rgba(0,0,0,0.8)] absolute top-0 left-0"></div>
-      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col justify-around">
+      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col justify-center">
         <div>
           <h2 className="text-6xl capitalize font-inter font-bold">{name}</h2>
           <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-2"></div>
