@@ -110,7 +110,7 @@ export default function AnimeInfo() {
     <section className="h-auto pt-30 pb-10">
       <div className="w-[80%] mx-auto">
         <Link href="/" className="inline">
-          <button className="flex items-center justify-between backdrop-blur-sm px-5 py-2 rounded-sm transition duration-700 hover:bg-gray-400/50  cursor-pointer">
+          <button className="flex items-center justify-between backdrop-blur-sm px-5 py-2 rounded-sm transition duration-700 hover:bg-gray-400/50 cursor-pointer">
             <FaArrowLeft /> <span className="ml-5">Home</span>
           </button>
         </Link>

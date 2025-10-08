@@ -25,6 +25,7 @@ export default function GenreRecommendations({ genres }) {
         title={"you may also like"}
         icon={<RiStarSmileLine />}
         height={"40"}
+        maxH={280}
         itemsCountPerPage={7}
       />
     </section>
