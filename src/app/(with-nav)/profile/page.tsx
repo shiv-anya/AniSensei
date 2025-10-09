@@ -48,8 +48,8 @@ export default function ProfilePage() {
   if (!user) return null;
 
   return (
-    <section className="min-h-screen flex justify-center items-center py-32 w-full max-w-screen-xl">
-      <div className="h-[700px] w-[80%] bg-gray-900/80 rounded-xl max-h-[600px] backdrop-blur-sm flex shadow-banner">
+    <section className="min-h-screen flex justify-center items-center py-32 w-[80%] mx-auto max-w-screen-xl">
+      <div className="h-[550px] w-[80%] bg-gray-900/80 rounded-xl max-h-[600px] backdrop-blur-sm flex shadow-banner">
         <aside className="w-1/4 h-full bg-black/50 rounded-xl">
           <div className="w-full">
             <div
@@ -65,7 +65,7 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
-          <ul className="rounded-b-xl flex flex-col gap-8 p-4 py-8">
+          <ul className="rounded-b-xl flex flex-col gap-7 p-4 py-8">
             {list.map((el) => (
               <li
                 key={el.name}

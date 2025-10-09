@@ -108,7 +108,7 @@ export default function AnimeInfo() {
   }, [id]);
   return (
     <section className="h-auto pt-30 pb-10">
-      <div className="w-[80%] mx-auto">
+      <div className="w-[80%] mx-auto max-w-screen-xl">
         <Link href="/" className="inline">
           <button className="flex items-center justify-between backdrop-blur-sm px-5 py-2 rounded-sm transition duration-700 hover:bg-gray-400/50 cursor-pointer">
             <FaArrowLeft /> <span className="ml-5">Home</span>
@@ -127,7 +127,7 @@ export default function AnimeInfo() {
             )}
             <div className="w-full mt-5 flex flex-col gap-2">
               <Link
-                href={`/browse/${anime?.id}/${anime?.title.english
+                href={`/browse/${anime?.id}/${anime?.title?.english
                   .split(" ")
                   .join("-")
                   .toLowerCase()}`}

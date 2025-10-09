@@ -35,10 +35,18 @@ export const WatchList = () => {
       </div>
       <div className="h-[82%] w-full">
         {animeList.length > 0 ? (
-          <ul className="h-full overflow-y-scroll grid grid-cols-4 gap-4">
+          <ul
+            className="h-full overflow-y-auto
+                scrollbar-none
+                [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-gray-900
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-blue-500
+  [&::-webkit-scrollbar-thumb]:rounded-full grid grid-cols-4 gap-4 pr-4"
+          >
             {animeList.map((data) => (
               <li key={data._id}>
-                <div className="overflow-hidden h-[30vh] rounded-2xl">
+                <div className="overflow-hidden h-[30vh] max-h-48 rounded-2xl">
                   <AnimeCard anime={data.anime} />
                 </div>
                 <button
@@ -58,7 +66,7 @@ export const WatchList = () => {
             ))}
           </ul>
         ) : (
-          <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2">
+          <div className="h-[50vh] max-h-72 bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2">
             <span className="text-blue-400/50 text-6xl">
               <MdLocalMovies />
             </span>

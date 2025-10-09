@@ -32,7 +32,7 @@ export default function Browse() {
 
   const [showFilter, setShowFilter] = useState(false);
   return (
-    <section className="w-[80%] mx-auto pb-[55vh]">
+    <section className="w-[80%] mx-auto pb-[55vh] max-w-screen-xl">
       <div className="relative top-32">
         <div className="flex justify-between items-center">
           <div>

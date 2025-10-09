@@ -101,7 +101,7 @@ export const EditProfile = ({ user }) => {
           onChange={handleAvatarChange}
         />
         <button
-          className="bg-blue-400 hover:bg-blue-500 transition duration-700 w-[20%] rounded-3xl px-5 py-2 mt-4 cursor-pointer"
+          className="bg-blue-400 hover:bg-blue-500 transition duration-700 w-[20%] rounded-3xl px-5 py-2 mt-8 cursor-pointer"
           onClick={updateUserProfile}
         >
           {isPending ? <BeatLoader size={8} color="white" /> : "Update"}

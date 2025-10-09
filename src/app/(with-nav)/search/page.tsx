@@ -45,7 +45,7 @@ export default function Search() {
   }, []);
 
   return (
-    <div className="w-[80%] mx-auto h-auto pb-[40vh]">
+    <div className="w-[80%] mx-auto h-auto pb-[40vh] max-w-screen-xl">
       <div className="relative top-28">
         <div
           className={`flex w-full pl-4 rounded-2xl items-center border border-gray-600 ${

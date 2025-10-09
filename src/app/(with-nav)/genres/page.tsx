@@ -75,7 +75,7 @@ export default function Genres() {
   };
   const genres = useDebounce(genresArray, 1000);
   return (
-    <section className="h-auto w-[80%] mx-auto py-40">
+    <section className="h-auto min-h-screen w-[80%] mx-auto py-40 max-w-screen-xl">
       <div>
         <div>
           <div className="flex gap-2 items-center text-blue-500 text-4xl font-bold">

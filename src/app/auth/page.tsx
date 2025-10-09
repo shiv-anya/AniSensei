@@ -30,7 +30,7 @@ export default function Login() {
     });
   };
   return (
-    <section className="h-screen w-full bg-black bg-contain bg-right-top bg-no-repeat bg-[url('./assets/superman.jpg')] flex flex-col items-center">
+    <section className="h-screen w-full bg-black bg-contain bg-right-top bg-no-repeat bg-[url('/assets/superman.jpg')] flex flex-col items-center">
       {message && <p className="fixed right-5 top-5 text-3xl">{message}</p>}
       <div className="flex flex-col gap-8 justify-center items-center absolute left-0 top-0 h-screen w-full bg-black/30 p-8">
         <Link href={"/"} className="z-30">
