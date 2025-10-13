@@ -43,7 +43,7 @@ export default function Controls({
       } absolute top-0 left-0 z-10 p-8 flex flex-col items-center justify-between`}
     >
       <h2 className="text-3xl font-semibold capitalize">
-        {heading.split("-").join(" ")}
+        {heading?.split("-").join(" ")}
       </h2>
       {buffer && (
         <HashLoader

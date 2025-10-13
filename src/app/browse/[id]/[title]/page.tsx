@@ -1,13 +1,18 @@
 "use client";
 import Controls from "@/app/_components/Controls";
-import { useParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { fetchAniList } from "@/app/_lib/fetchAniList";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import screenfull from "screenfull";
 
 export default function VideoPlayer() {
   const containerRef = useRef(null);
   const playerRef = useRef(null);
+  const params = useParams();
+  const router = useRouter();
+  const [anime, setAnime] = useState(null);
+
   const [playerState, setPlayerState] = useState({
     playing: false,
     muted: true,
@@ -99,13 +104,26 @@ export default function VideoPlayer() {
     setPlayerState((prev) => ({ ...prev, playbackRate: val }));
   };
 
-  const params = useParams();
-
   const toggleFullscreen = () => {
     if (screenfull.isEnabled && containerRef.current) {
       screenfull.toggle(containerRef.current);
     }
   };
+
+  useEffect(() => {
+    const getAnimeById = async () => {
+      try {
+        const data = await fetchAniList({
+          query: SEARCH_BY_ID,
+          variables: { id: params.id },
+        });
+        setAnime(data.Media);
+      } catch (e) {
+        router.replace("/not-found");
+      }
+    };
+    getAnimeById();
+  }, [params.id]);
 
   return (
     <section className="h-screen w-full bg-black" ref={containerRef}>
@@ -123,7 +141,7 @@ export default function VideoPlayer() {
         onBufferEnd={() => setPlayerState({ ...playerState, buffer: false })}
       />
       <Controls
-        heading={params.title}
+        heading={anime?.title?.english || anime?.title?.romaji}
         playing={playerState.playing}
         muted={playerState.muted}
         onPlayPause={playPauseHandler}

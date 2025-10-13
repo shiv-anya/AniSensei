@@ -3,7 +3,7 @@ import { SEARCH_BY_ID } from "@/app/_graphql/queries";
 import { fetchAniList } from "@/app/_lib/fetchAniList";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoPlayOutline } from "react-icons/io5";
@@ -54,6 +54,7 @@ export default function AnimeInfo() {
   const [isPendingWatchlist, setIsPendingWatchlist] = useState(false);
   const [isPendingFavorites, setIsPendingFavorites] = useState(false);
   const { id } = useParams();
+  const router = useRouter();
   let isAnimeInWatchlist;
   let isAnimeInFavorites;
   if (userInfo?.user?.watchlist) {
@@ -74,8 +75,15 @@ export default function AnimeInfo() {
     .replace(/<\/?i>/gi, "")
     .replace(/<\/?[^>]+(>|$)/g, "");
   const getAnimeById = async (id) => {
-    const data = await fetchAniList({ query: SEARCH_BY_ID, variables: { id } });
-    setAnime(data.Media);
+    try {
+      const data = await fetchAniList({
+        query: SEARCH_BY_ID,
+        variables: { id },
+      });
+      setAnime(data.Media);
+    } catch (e) {
+      router.replace("/not-found");
+    }
   };
   const handleAddAnimeToFavorites = async () => {
     setIsPendingFavorites(true);
