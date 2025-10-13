@@ -20,7 +20,7 @@ import { CiCalendar } from "react-icons/ci";
 import { TbTag } from "react-icons/tb";
 import GenreRecommendations from "@/app/_components/GenreRecommendations";
 import { addToWatchlist, removeFromWatchlist } from "@/app/actions/watchlist";
-import { BeatLoader } from "react-spinners";
+import { BeatLoader, HashLoader } from "react-spinners";
 import { useAuth } from "@/app/_context/AuthContext";
 import { addToFavorites, removeFromFavorites } from "@/app/actions/favorites";
 
@@ -106,6 +106,13 @@ export default function AnimeInfo() {
   useEffect(() => {
     getAnimeById(id);
   }, [id]);
+  if (!anime) {
+    return (
+      <section className="h-screen w-full flex justify-center items-center">
+        <HashLoader size={24} color="#60A5FA" />
+      </section>
+    );
+  }
   return (
     <section className="h-auto pt-30 pb-10">
       <div className="w-[80%] mx-auto max-w-screen-xl">
@@ -127,10 +134,10 @@ export default function AnimeInfo() {
             )}
             <div className="w-full mt-5 flex flex-col gap-2">
               <Link
-                href={`/browse/${anime?.id}/${anime?.title?.english
-                  .split(" ")
-                  .join("-")
-                  .toLowerCase()}`}
+                href={`/browse/${anime?.id}/${
+                  anime?.title?.english?.split(" ").join("-").toLowerCase() ||
+                  anime?.title?.romaji?.split(" ").join("-").toLowerCase()
+                }`}
                 className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
               >
                 <IoPlayOutline size={18} />
@@ -250,7 +257,8 @@ export default function AnimeInfo() {
           </aside>
           <article className="w-[80%]">
             <h2 className="font-bold text-6xl">
-              {anime?.title.english + " " + `(${anime?.startDate.year})`}
+              {anime?.title.english ||
+                anime?.title?.romaji + " " + `(${anime?.startDate.year})`}
             </h2>
             <div className="flex text-sm gap-3 my-5">
               <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">

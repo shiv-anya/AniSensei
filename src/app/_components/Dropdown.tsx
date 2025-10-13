@@ -42,7 +42,7 @@ export default function Dropdown({ label, options, value, onChange }) {
         className={`
           absolute left-0 mt-2 w-48 bg-gray-900 rounded-xl shadow-lg overflow-hidden
           transition-all duration-300 ease-in-out origin-top
-          ${isOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}
+          ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}
         `}
       >
         {options.map((option) => (
@@ -50,7 +50,7 @@ export default function Dropdown({ label, options, value, onChange }) {
             key={option.value}
             onClick={() => handleSelect(label, option.value)}
             className={`w-full text-left px-4 py-2 hover:bg-gray-800 capitalize ${
-              value === option ? "text-blue-400" : "text-gray-300"
+              value === option.value ? "text-blue-400" : "text-gray-300"
             }`}
           >
             {option.name}
