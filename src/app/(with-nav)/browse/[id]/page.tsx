@@ -82,7 +82,7 @@ export default function AnimeInfo() {
       });
       setAnime(data.Media);
     } catch (e) {
-      router.replace("/not-found");
+      router.replace("/404");
     }
   };
   const handleAddAnimeToFavorites = async () => {

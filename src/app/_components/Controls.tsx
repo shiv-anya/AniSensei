@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { BsFullscreen, BsVolumeMuteFill } from "react-icons/bs";
 import { IoIosSkipForward, IoMdPause, IoMdPlay } from "react-icons/io";

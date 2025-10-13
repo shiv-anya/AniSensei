@@ -1,5 +1,6 @@
 "use client";
 import Controls from "@/app/_components/Controls";
+import { SEARCH_BY_ID } from "@/app/_graphql/queries";
 import { fetchAniList } from "@/app/_lib/fetchAniList";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -113,17 +114,24 @@ export default function VideoPlayer() {
   useEffect(() => {
     const getAnimeById = async () => {
       try {
+        const id = params.id;
         const data = await fetchAniList({
           query: SEARCH_BY_ID,
-          variables: { id: params.id },
+          variables: { id },
         });
         setAnime(data.Media);
+        if (
+          params.title?.split("-").join(" ") !==
+          data?.Media?.title?.english.toLowerCase()
+        ) {
+          router.replace("/404");
+        }
       } catch (e) {
-        router.replace("/not-found");
+        router.replace("/404");
       }
     };
     getAnimeById();
-  }, [params.id]);
+  }, []);
 
   return (
     <section className="h-screen w-full bg-black" ref={containerRef}>
