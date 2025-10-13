@@ -5,11 +5,13 @@ import { fetchAniList } from "../_lib/fetchAniList";
 import useInfiniteScroll from "../_hooks/useInfiniteScroll";
 import AnimeCard from "./AnimeCard";
 import { debounce } from "../_utils/debounce";
+import { HashLoader } from "react-spinners";
 
 export default function AnimesList({ query, filters }) {
   const pageRef = useRef(0);
   const totalRef = useRef(0);
   const [animeList, setAnimeList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const sort = filters?.sort_by || undefined;
   const format = filters?.format || undefined;
@@ -19,6 +21,7 @@ export default function AnimesList({ query, filters }) {
 
   const loadMore = async () => {
     try {
+      setIsLoading(true);
       const nextPage = pageRef.current + 1;
       const data = await fetchAniList({
         query,
@@ -39,6 +42,8 @@ export default function AnimesList({ query, filters }) {
       pageRef.current = nextPage;
     } catch (e) {
       console.error("Failed to fetch more anime:", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +64,6 @@ export default function AnimesList({ query, filters }) {
   // Hook to load more on scroll
   const debouncedLoadMore = useRef(debounce(loadMore, 700)).current;
   useInfiniteScroll(debouncedLoadMore, hasMore);
-
   return (
     <>
       <div className="flex justify-between py-8 text-xl items-center">
@@ -67,16 +71,23 @@ export default function AnimesList({ query, filters }) {
         <p className="text-gray-400">{totalRef.current} results found</p>
       </div>
       {animeList.length > 0 ? (
-        <div className="grid grid-cols-6 gap-4">
-          {animeList.map((anime) => (
-            <div
-              key={anime.id}
-              className="overflow-hidden h-[35vh] max-h-72 rounded-2xl"
-            >
-              <AnimeCard anime={anime} />
+        <>
+          <div className="grid grid-cols-6 gap-4">
+            {animeList.map((anime) => (
+              <div
+                key={anime.id}
+                className="overflow-hidden h-[35vh] max-h-72 rounded-2xl"
+              >
+                <AnimeCard anime={anime} />
+              </div>
+            ))}
+          </div>
+          {isLoading && (
+            <div className="flex justify-center py-16">
+              <HashLoader size={24} color="#60A5FA" />
             </div>
-          ))}
-        </div>
+          )}
+        </>
       ) : (
         <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2 max-h-96">
           <span className="text-blue-400/50 text-6xl">

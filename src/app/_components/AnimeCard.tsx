@@ -28,7 +28,9 @@ export default function AnimeCard({ anime }) {
             )}
           </div>
           <div>
-            <p>{anime.title.english || anime.title.romaji || anime?.title}</p>
+            <p>
+              {anime?.title?.english || anime?.title?.romaji || anime?.title}
+            </p>
           </div>
         </div>
       </div>
