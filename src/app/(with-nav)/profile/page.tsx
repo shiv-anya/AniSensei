@@ -42,7 +42,7 @@ export default function ProfilePage() {
   if (loading)
     return (
       <section className="h-screen flex justify-center items-center">
-        <HashLoader size={30} className="#60A5FA" />
+        <HashLoader size={24} color="#60A5FA" />
       </section>
     );
   if (!user) return null;
