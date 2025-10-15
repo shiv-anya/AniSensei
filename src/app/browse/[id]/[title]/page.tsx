@@ -114,16 +114,17 @@ export default function VideoPlayer() {
   useEffect(() => {
     const getAnimeById = async () => {
       try {
+        const decodedParamTitle = decodeURIComponent(params.title);
         const id = params.id;
         const data = await fetchAniList({
           query: SEARCH_BY_ID,
           variables: { id },
         });
+        const linkTitleEqualToTitle =
+          decodedParamTitle?.split("-").join(" ") ===
+          data?.Media?.title?.english.toLowerCase();
         setAnime(data.Media);
-        if (
-          params.title?.split("-").join(" ") !==
-          data?.Media?.title?.english.toLowerCase()
-        ) {
+        if (!linkTitleEqualToTitle) {
           router.replace("/404");
         }
       } catch (e) {

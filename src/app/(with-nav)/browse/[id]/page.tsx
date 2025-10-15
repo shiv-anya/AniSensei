@@ -69,7 +69,7 @@ export default function AnimeInfo() {
   const day = String(anime?.startDate.day).padStart(2, "0");
   const month = Month[anime?.startDate.month - 1];
   const year = anime?.startDate.year;
-  const formattedDate = `${day} ${month}, ${year}`;
+  const formattedDate = year ? `${day} ${month}, ${year}` : "Not released yet";
   const cleanDescription = anime?.description
     ?.replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/?i>/gi, "")
@@ -141,16 +141,22 @@ export default function AnimeInfo() {
               />
             )}
             <div className="w-full mt-5 flex flex-col gap-2">
-              <Link
-                href={`/browse/${anime?.id}/${
-                  anime?.title?.english?.split(" ").join("-").toLowerCase() ||
-                  anime?.title?.romaji?.split(" ").join("-").toLowerCase()
-                }`}
-                className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
-              >
-                <IoPlayOutline size={18} />
-                Watch Now
-              </Link>
+              {anime?.status !== "CANCELLED" &&
+                anime?.status !== "NOT_YET_RELEASED" && (
+                  <Link
+                    href={`/browse/${anime?.id}/${
+                      anime?.title?.english
+                        ?.split(" ")
+                        .join("-")
+                        .toLowerCase() ||
+                      anime?.title?.romaji?.split(" ").join("-").toLowerCase()
+                    }`}
+                    className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
+                  >
+                    <IoPlayOutline size={18} />
+                    Watch Now
+                  </Link>
+                )}
               {anime?.trailer?.site === "youtube" && (
                 <Link
                   href={`https://www.youtube.com/watch?v=${anime?.trailer.id}`}
@@ -248,8 +254,10 @@ export default function AnimeInfo() {
                 <li className="text-blue-500 w-full  flex gap-2 items-center">
                   <IoMdTime size={18} />
                   <span className="text-white">{`Runtime: ${
-                    formatDuration(anime?.duration) +
-                    `${anime?.format !== "MOVIE" ? " /episode" : ""}`
+                    year
+                      ? formatDuration(anime?.duration) +
+                        `${anime?.format !== "MOVIE" ? " /episode" : ""}`
+                      : "0 hrs"
                   }`}</span>
                 </li>
                 <li className="text-blue-500 w-full  flex gap-2 items-center">
@@ -285,7 +293,7 @@ export default function AnimeInfo() {
                 <span className="text-yellow-500 text-base">
                   <FaStar />
                 </span>
-                {anime?.averageScore}
+                {year ? anime?.averageScore : 0}
               </div>
             </div>
             <div>
