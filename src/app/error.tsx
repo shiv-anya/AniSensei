@@ -25,7 +25,7 @@ export default function ErrorPage({ error }) {
           href="/"
           className="inline-block mt-6 h-12 w-48 rounded-lg flex items-center justify-center bg-gradient-to-r from-yellow-400 via-red-500 to-yellow-500 text-white p-[2px] transition duration-700 hover:bg-gradient-to-l hover:shadow-purple-600/30 animate-rotate"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-lg bg-black">
+          <div className="flex h-full w-full items-center justify-center rounded-lg bg-black">
             Return Home
           </div>
         </Link>

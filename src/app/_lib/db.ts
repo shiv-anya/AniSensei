@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = String(process.env.MONGODB_URI);
 
 let isConnected = false;
 
