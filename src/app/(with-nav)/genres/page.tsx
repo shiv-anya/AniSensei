@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { GENRE_RECOMMENDATIONS } from "../../_graphql/queries";
 import AnimesList from "@/app/_components/AnimesList";
+import { FaTimes } from "react-icons/fa";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AniListGenres = [
   "Action",
@@ -48,7 +50,10 @@ const AniListGenres = [
 ];
 
 export default function Genres() {
-  const [genresArray, setGenresArray] = useState([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialGenresArray = searchParams.get("selected")?.split(",") || [];
+  const [genresArray, setGenresArray] = useState(initialGenresArray);
   function useDebounce(value, delay = 500) {
     const [debounced, setDebounced] = useState(value);
 
@@ -66,12 +71,18 @@ export default function Genres() {
   }
   const toggleGenreSelect = (name) => {
     const idx = genresArray.indexOf(name);
+    let updatedGenresArray = [];
     if (idx === -1) {
-      setGenresArray((prev) => [...prev, name]);
+      updatedGenresArray = [...genresArray, name];
     } else {
-      const tempArray = [...genresArray].filter((el) => el !== name);
-      setGenresArray(tempArray);
+      updatedGenresArray = [...genresArray].filter((el) => el !== name);
     }
+    setGenresArray(updatedGenresArray);
+    const params = new URLSearchParams();
+    if (updatedGenresArray.length > 0) {
+      params.set("selected", updatedGenresArray.join(","));
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
   };
   const genres = useDebounce(genresArray, 1000);
   return (
@@ -102,6 +113,19 @@ export default function Genres() {
                 </button>
               </li>
             ))}
+            <button
+              className={`bg-black/20 rounded-3xl hover:bg-black/50 px-5 py-2 transition duration flex gap-2 items-center hover:bg-blue-500"
+                `}
+              onClick={() => {
+                setGenresArray([]);
+                router.push("/genres");
+              }}
+            >
+              Clear All{" "}
+              <span>
+                <FaTimes />
+              </span>
+            </button>
           </ul>
         </div>
         <div>
