@@ -28,6 +28,8 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
   const month = Month[date.month - 1];
   const year = date.year;
   const formattedDate = `${day} ${month}, ${year}`;
+  const urlTitle = name.split(" ").join("-").toLowerCase();
+  console.log(urlTitle);
 
   return (
     <div
@@ -67,7 +69,8 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
           </Link>
         </div>
         <div className="w-full my-5 flex gap-4">
-          <button
+          <Link
+            href={`/browse/${id}/${urlTitle}`}
             className="relative bg-blue-500 w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-search shadow-blue-500/40 overflow-hidden hover:scale-110 duration-700 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[70%] before:h-full before:bg-gradient-to-r before:from-white/50 before:to-transparent before:translate-x-[-100%] before:-skew-x-12 hover:before:translate-x-[200%] 
   before:transition-transform before:duration-700 before:ease-in"
           >
@@ -75,7 +78,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
               <IoPlayCircleOutline />
             </span>
             Watch Now
-          </button>
+          </Link>
 
           <Link
             href={`/browse/${id}`}
