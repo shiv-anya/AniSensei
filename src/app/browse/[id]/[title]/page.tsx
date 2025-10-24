@@ -1,18 +1,27 @@
 "use client";
+
 import Controls from "@/app/_components/Controls";
+import { useAuth } from "@/app/_context/AuthContext";
 import { SEARCH_BY_ID } from "@/app/_graphql/queries";
+import { useVideoProgress } from "@/app/_hooks/useVideoProgress";
 import { fetchAniList } from "@/app/_lib/fetchAniList";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
+import dynamic from "next/dynamic";
 import screenfull from "screenfull";
 
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+
 export default function VideoPlayer() {
+  const { user } = useAuth();
   const containerRef = useRef(null);
   const playerRef = useRef(null);
   const params = useParams();
   const router = useRouter();
+  const [progressLoaded, setProgressLoaded] = useState(false);
   const [anime, setAnime] = useState(null);
+  const { saveLocal, syncToDB } = useVideoProgress(anime, user);
 
   const [playerState, setPlayerState] = useState({
     playing: false,
@@ -55,12 +64,15 @@ export default function VideoPlayer() {
   };
 
   const progressHandler = (state) => {
+    if (!anime?.id) return;
+    saveLocal(state.played * 100);
     if (!playerState.seeking) {
       setPlayerState((prev) => ({ ...prev, played: state.played }));
     }
   };
 
   const seekHandler = (e) => {
+    if (!progressLoaded) return;
     const newValue = parseFloat(e.target.value);
     setPlayerState((prev) => ({
       ...prev,
@@ -70,7 +82,9 @@ export default function VideoPlayer() {
   };
 
   const seekMouseUpHandler = (e) => {
+    if (!progressLoaded) return;
     const newValue = parseFloat(e.target.value);
+    saveLocal(newValue);
     setPlayerState((prev) => ({
       ...prev,
       played: newValue / 100,
@@ -112,10 +126,17 @@ export default function VideoPlayer() {
   };
 
   useEffect(() => {
+    const id = params.id;
+    const saved = JSON.parse(localStorage.getItem("progress") || "{}");
+    const savedProgress = saved[id]?.progress ?? null;
+    if (savedProgress !== null && playerRef.current) {
+      playerRef.current.seekTo(savedProgress / 100);
+      setPlayerState((prev) => ({ ...prev, played: savedProgress / 100 }));
+    }
+    setProgressLoaded(true);
     const getAnimeById = async () => {
       try {
         const decodedParamTitle = decodeURIComponent(params.title);
-        const id = params.id;
         const data = await fetchAniList({
           query: SEARCH_BY_ID,
           variables: { id },
@@ -131,8 +152,8 @@ export default function VideoPlayer() {
         router.replace("/404");
       }
     };
-    getAnimeById();
-  }, []);
+    if (!progressLoaded) getAnimeById();
+  }, [anime]);
 
   return (
     <section className="h-screen w-full bg-black" ref={containerRef}>
@@ -146,6 +167,7 @@ export default function VideoPlayer() {
         muted={playerState.muted}
         playbackRate={playerState.playbackRate}
         onProgress={progressHandler}
+        onPause={() => syncToDB()}
         onBuffer={() => setPlayerState({ ...playerState, buffer: true })}
         onBufferEnd={() => setPlayerState({ ...playerState, buffer: false })}
       />

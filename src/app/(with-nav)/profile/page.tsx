@@ -1,6 +1,7 @@
 "use client";
 import { EditProfile } from "@/app/_components/EditProfile";
 import { Favorites } from "@/app/_components/Favorites";
+import { History } from "@/app/_components/History";
 import { WatchList } from "@/app/_components/WatchList";
 import { useAuth } from "@/app/_context/AuthContext";
 import { logoutAction } from "@/app/actions/auth";
@@ -84,6 +85,7 @@ export default function ProfilePage() {
           {currentNav === "Edit Profile" && <EditProfile user={user} />}
           {currentNav === "WatchList" && <WatchList />}
           {currentNav === "Favorites" && <Favorites />}
+          {currentNav === "History" && <History />}
         </div>
       </div>
     </section>
