@@ -21,7 +21,7 @@ export const Navbar = () => {
   const pathname = usePathname();
   const [isHoverElement, setIsHoverElement] = useState("");
   return (
-    <nav className="rounded-lg w-[95%] h-[14vh] left-[32px] text-white flex justify-between items-center bg-[rgba(0,0,0,0.8)] border border-gray-600 mt-4 fixed bottom-4 z-50 backdrop-blur-sm max-h-32">
+    <nav className="rounded-lg w-[95%] h-[14vh] left-[32px] text-white flex justify-between items-center bg-[rgba(0,0,0,0.3)] border border-gray-600 mt-4 fixed bottom-4 z-50 backdrop-blur-sm max-h-18">
       <ul className="w-full list-none flex justify-between items-center">
         {navLinks.map((item) => (
           <li

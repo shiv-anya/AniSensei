@@ -3,7 +3,7 @@ import { IoSearch } from "react-icons/io5";
 
 export const Header = () => {
   return (
-    <header className="rounded-lg w-[95%] mx-auto text-white flex justify-between items-center bg-[rgba(0,0,0,0.5)] border border-gray-600 p-4 fixed top-4 left-8 z-10 backdrop-blur-sm">
+    <header className="rounded-lg w-[95%] mx-auto text-white flex justify-between items-center bg-[rgba(0,0,0,0.3)] border border-gray-600 p-4 fixed top-4 left-8 z-10 backdrop-blur-sm">
       <Link href={"/"}>
         <h2 className="font-lucky text-3xl">AniSensei</h2>
       </Link>
