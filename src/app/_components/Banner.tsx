@@ -29,7 +29,6 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
   const year = date.year;
   const formattedDate = `${day} ${month}, ${year}`;
   const urlTitle = name.split(" ").join("-").toLowerCase();
-  console.log(urlTitle);
 
   return (
     <div
@@ -37,36 +36,38 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
       style={{ backgroundImage: `url(${img})` }}
     >
       <div className="h-full rounded-[2.5rem] w-full bg-[rgba(0,0,0,0.8)] absolute top-0 left-0"></div>
-      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col justify-center">
+      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col gap-4 justify-center">
         <div>
           <h2 className="text-6xl capitalize font-inter font-bold">{name}</h2>
           <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-2"></div>
         </div>
-        <div className="flex text-sm gap-3 my-5">
-          <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-            <span className="text-blue-500 text-base">
-              <CiCalendar />
-            </span>
-            {formattedDate}
+        <div>
+          <div className="flex text-sm gap-3 my-5">
+            <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
+              <span className="text-blue-500 text-base">
+                <CiCalendar />
+              </span>
+              {formattedDate}
+            </div>
+            <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
+              <span className="text-blue-500 text-base">
+                <MdOutlineMovieFilter />
+              </span>
+              {type}
+            </div>
+            <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
+              <span className="text-yellow-500 text-base">
+                <FaStar />
+              </span>
+              {rating}
+            </div>
           </div>
-          <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-            <span className="text-blue-500 text-base">
-              <MdOutlineMovieFilter />
-            </span>
-            {type}
+          <div className="bg-[rgba(0,0,0,0.3)] backdrop-blur-sm py-3 px-5 rounded-xl border border-gray-600 text-lg">
+            {result + "... "}
+            <Link href={`/browse/${id}`} className="text-blue-500">
+              Read more.
+            </Link>
           </div>
-          <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-            <span className="text-yellow-500 text-base">
-              <FaStar />
-            </span>
-            {rating}
-          </div>
-        </div>
-        <div className="bg-[rgba(0,0,0,0.3)] backdrop-blur-sm py-3 px-5 rounded-xl border border-gray-600 text-lg">
-          {result + "... "}
-          <Link href={`/browse/${id}`} className="text-blue-500">
-            Read more.
-          </Link>
         </div>
         <div className="w-full my-5 flex gap-4">
           <Link

@@ -77,6 +77,8 @@ export default function Controls({
             value={played ? played * 100 : 0}
             onChange={onSeeking}
             onMouseUp={onSeekingMouseUp}
+            onTouchStart={onSeekingMouseUp}
+            onTouchEnd={onSeekingMouseUp}
             className="
     w-full h-2 bg-gray-700/60 rounded-lg appearance-none cursor-pointer
     accent-blue-500

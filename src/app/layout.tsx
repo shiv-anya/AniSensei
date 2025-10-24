@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/app/_context/AuthContext";
 
 export const metadata: Metadata = {
   title: "AniSensei | Home",
@@ -10,7 +11,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-poppins">
-        <main>{children}</main>
+        <AuthProvider>
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );
