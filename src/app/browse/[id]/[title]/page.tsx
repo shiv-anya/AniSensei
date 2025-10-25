@@ -199,7 +199,7 @@ export default function VideoPlayer() {
     <section className="h-screen w-full bg-black" ref={containerRef}>
       <ReactPlayer
         ref={playerRef}
-        url={`http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4`}
+        url={`https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4`}
         controls={false}
         height="100%"
         width="100%"
