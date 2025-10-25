@@ -40,6 +40,20 @@ export async function addOrUpdateHistory(animeData, userEmail) {
   };
 }
 
+export async function getHistoryByAnimeId(userEmail, animeId) {
+  if (!animeId || !userEmail) return;
+  await connectDB();
+  const user = await User.findOne({ email: userEmail });
+  if (!user) {
+    return { success: false, message: "Unauthorized" };
+  }
+  const history = user.history.find(
+    (h) => h.anime.id.toString() === animeId.toString()
+  );
+  const plainHistory = history ? JSON.parse(JSON.stringify(history)) : null;
+  return { success: true, history: plainHistory };
+}
+
 export async function getHistory(userEmail) {
   await connectDB();
   const user = await User.findOne({ email: userEmail });

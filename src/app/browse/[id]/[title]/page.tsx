@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 // import ReactPlayer from "react-player";
 import dynamic from "next/dynamic";
 import screenfull from "screenfull";
+import { getHistoryByAnimeId } from "@/app/actions/history";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
@@ -127,13 +128,13 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const id = params.id;
-    const saved = JSON.parse(localStorage.getItem("progress") || "{}");
-    const savedProgress = saved[id]?.progress ?? null;
-    if (savedProgress !== null && playerRef.current) {
-      playerRef.current.seekTo(savedProgress / 100);
-      setPlayerState((prev) => ({ ...prev, played: savedProgress / 100 }));
-    }
-    setProgressLoaded(true);
+    // const saved = JSON.parse(localStorage.getItem("progress") || "{}");
+    // const savedProgress = saved[id]?.progress ?? null;
+    // if (savedProgress !== null && playerRef.current) {
+    //   playerRef.current.seekTo(savedProgress / 100);
+    //   setPlayerState((prev) => ({ ...prev, played: savedProgress / 100 }));
+    // }
+    // setProgressLoaded(true);
     const getAnimeById = async () => {
       try {
         const decodedParamTitle = decodeURIComponent(params.title);
@@ -153,7 +154,46 @@ export default function VideoPlayer() {
       }
     };
     if (!progressLoaded) getAnimeById();
-  }, [anime]);
+  }, []);
+
+  useEffect(() => {
+    if (!user?.email) return; // wait until user is available
+
+    const id = params.id;
+
+    const loadProgress = async () => {
+      let progress = null;
+
+      try {
+        // 1️⃣ Try fetching progress from DB
+        const data = await getHistoryByAnimeId(user.email, id);
+        if (data && data.history.progress !== undefined) {
+          progress = data.history.progress;
+          // console.log("Loaded progress from DB:", progress);
+        } else {
+          // 2️⃣ Fall back to localStorage
+          const saved = JSON.parse(localStorage.getItem("progress") || "{}");
+          progress = saved[id]?.progress ?? 0;
+          // console.log("Loaded progress from localStorage:", progress);
+        }
+      } catch (err) {
+        console.error("Error loading progress:", err);
+
+        // fallback in case DB fetch fails
+        const saved = JSON.parse(localStorage.getItem("progress") || "{}");
+        progress = saved[id]?.progress ?? 0;
+      }
+
+      // 3️⃣ Apply progress to player
+      if (playerRef.current && progress > 0) {
+        playerRef.current.seekTo(progress / 100);
+        setPlayerState((prev) => ({ ...prev, played: progress / 100 }));
+        setProgressLoaded(true);
+      }
+    };
+
+    loadProgress();
+  }, [user, params.id]);
 
   return (
     <section className="h-screen w-full bg-black" ref={containerRef}>

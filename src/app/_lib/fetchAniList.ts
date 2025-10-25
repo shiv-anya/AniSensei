@@ -6,7 +6,6 @@ export async function fetchAniList({ query, variables = {} }) {
   });
 
   const json = await res.json();
-
   if (!res.ok || json.errors) {
     throw new Error("AniList API request failed");
   }
