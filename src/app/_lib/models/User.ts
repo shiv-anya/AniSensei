@@ -12,6 +12,20 @@ const AnimeSnapshotSchema = new mongoose.Schema(
   { _id: false }
 ); // no extra _id for subdocs
 
+const MessageSchema = new mongoose.Schema({
+  role: { type: String, enum: ["user", "bot"], required: true },
+  content: String,
+  structured: mongoose.Schema.Types.Mixed,
+  loading: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const ChatSchema = new mongoose.Schema({
+  title: { type: String, default: "New Chat" },
+  messages: [MessageSchema],
+  createdAt: { type: Date, default: Date.now },
+});
+
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -50,6 +64,10 @@ const UserSchema = new mongoose.Schema(
         lastWatched: { type: Date, default: Date.now },
       },
     ],
+    chats: {
+      type: [ChatSchema],
+      default: [],
+    },
   },
   { timestamps: true }
 );
