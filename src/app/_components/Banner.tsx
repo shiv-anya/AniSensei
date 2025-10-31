@@ -36,9 +36,11 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
       style={{ backgroundImage: `url(${img})` }}
     >
       <div className="h-full rounded-[2.5rem] w-full bg-[rgba(0,0,0,0.8)] absolute top-0 left-0"></div>
-      <div className="w-[60%] z-4 py-9 pl-12 flex flex-col gap-4 justify-center">
+      <div className="w-full lg:w-[60%] z-4 py-9 lg:pl-12 px-5 flex flex-col gap-4 justify-center">
         <div>
-          <h2 className="text-6xl capitalize font-inter font-bold">{name}</h2>
+          <h2 className="text-2xl md:text-4xl lg:text-6xl capitalize font-inter font-bold">
+            {name}
+          </h2>
           <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-2"></div>
         </div>
         <div>
@@ -62,17 +64,17 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
               {rating}
             </div>
           </div>
-          <div className="bg-[rgba(0,0,0,0.3)] backdrop-blur-sm py-3 px-5 rounded-xl border border-gray-600 text-lg">
+          <div className="bg-[rgba(0,0,0,0.3)] backdrop-blur-sm py-3 px-5 rounded-xl border border-gray-600 lg:text-lg text-base">
             {result + "... "}
             <Link href={`/browse/${id}`} className="text-blue-500">
               Read more.
             </Link>
           </div>
         </div>
-        <div className="w-full my-5 flex gap-4">
+        <div className="w-full lg:w-full md:w-[70%] my-5 flex gap-4">
           <Link
             href={`/browse/${id}/${urlTitle}`}
-            className="relative bg-blue-500 w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-search shadow-blue-500/40 overflow-hidden hover:scale-110 duration-700 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[70%] before:h-full before:bg-gradient-to-r before:from-white/50 before:to-transparent before:translate-x-[-100%] before:-skew-x-12 hover:before:translate-x-[200%] 
+            className="relative bg-blue-500 w-1/2 lg:w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-search shadow-blue-500/40 overflow-hidden hover:scale-110 duration-700 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[70%] before:h-full before:bg-gradient-to-r before:from-white/50 before:to-transparent before:translate-x-[-100%] before:-skew-x-12 hover:before:translate-x-[200%] 
   before:transition-transform before:duration-700 before:ease-in"
           >
             <span className="text-xl">
@@ -83,7 +85,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
 
           <Link
             href={`/browse/${id}`}
-            className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-110 hover:bg-gray-600/50 duration-700"
+            className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm w-1/2 lg:w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-110 hover:bg-gray-600/50 duration-700"
           >
             <span className="text-xl">
               <IoInformationCircleOutline />
@@ -92,7 +94,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
           </Link>
         </div>
       </div>
-      <div className="w-[40%] h-full z-4 overflow-hidden">
+      <div className="w-[40%] h-full z-4 overflow-hidden hidden lg:block">
         <div
           className={`w-[75%] mx-auto h-full bg-cover bg-no-repeat bg-center shadow-poster shadow-blue-400/40 hover:scale-105 transition duration-700`}
           style={{ backgroundImage: `url(${img})` }}

@@ -27,7 +27,7 @@ const Carousel = ({ movies }) => {
   }, [currentIndex]);
 
   return (
-    <div className="h-[80vh] relative w-full mx-auto overflow-hidden top-28 shadow-banner rounded-[2.5rem] mb-56 max-h-[570px]">
+    <div className="h-[80vh] relative w-full mx-auto overflow-hidden top-28 shadow-banner rounded-[2.5rem] mb-40 lg:mb-56 max-h-[500px] md:max-h-[570px]">
       {/* Slides container */}
       <div
         className="h-full flex transition-transform duration-700 ease-in-out"

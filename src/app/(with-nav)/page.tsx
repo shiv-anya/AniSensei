@@ -42,15 +42,8 @@ export default async function Home() {
   const whatsPopularAnimes = await fetchAniList({ query: WHATS_POPULAR_QUERY });
 
   return (
-    <div className="w-[80%] mx-auto pb-[10vh] max-w-screen-xl">
+    <div className="w-[90%] md:w-[80%] mx-auto pb-[10vh] max-w-screen-xl">
       <BannerCarousel movies={finalBannerAnimes} />
-      {/* <ListCarousel
-        animes={dummyAnimes}
-        title={"Continue Watching"}
-        icon={<IoPlayCircleOutline />}
-        height={"40"}
-        itemsCountPerPage={7}
-      /> */}
       <ListCarousel
         animes={trendingAnimes.Page.media}
         title={"trending now"}

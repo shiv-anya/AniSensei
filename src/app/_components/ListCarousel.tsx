@@ -2,7 +2,7 @@
 
 import { FaChevronLeft } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnimeCard from "./AnimeCard";
 
 export default function ListCarousel({
@@ -15,7 +15,38 @@ export default function ListCarousel({
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerSlide, setItemsPerSlide] = useState(itemsCountPerPage);
+  const [responsiveHeight, setResponsiveHeight] = useState(height);
+  const [responsiveMaxH, setResponsiveMaxH] = useState(maxH);
   const totalItems = animes.length;
+
+  useEffect(() => {
+    const updateItemsPerSlide = () => {
+      const width = window.innerWidth;
+
+      if (width < 640)
+        setItemsPerSlide(Math.max(2, Math.floor(itemsCountPerPage / 4)));
+      else if (width < 1024)
+        setItemsPerSlide(Math.max(2, Math.floor(itemsCountPerPage / 2)));
+      else if (width < 1280)
+        setItemsPerSlide(Math.max(2, Math.floor(itemsCountPerPage * 0.75)));
+      else setItemsPerSlide(itemsCountPerPage);
+
+      if (width < 640) {
+        setResponsiveHeight(height * 0.5);
+        setResponsiveMaxH(maxH * 0.6);
+      } else if (width < 1024) {
+        setResponsiveHeight(height * 0.8);
+        setResponsiveMaxH(maxH * 0.8);
+      } else {
+        setResponsiveHeight(height);
+        setResponsiveMaxH(maxH);
+      }
+    };
+
+    updateItemsPerSlide();
+    window.addEventListener("resize", updateItemsPerSlide);
+    return () => window.removeEventListener("resize", updateItemsPerSlide);
+  }, [itemsCountPerPage]);
 
   const handleNext = () => {
     setCurrentIndex((prev) =>
@@ -36,8 +67,11 @@ export default function ListCarousel({
 
   return (
     <section
-      className={`w-full mb-32`}
-      style={{ height: `${height}vh`, maxHeight: `${maxH}px` }}
+      className={`w-full mb-24 md:mb-32`}
+      style={{
+        height: `${responsiveHeight}vh`,
+        maxHeight: `${responsiveMaxH}px`,
+      }}
     >
       <div className="h-[10%] text-2xl flex justify-between py-2 mb-8 items-center">
         <div className="flex gap-2 items-center">
