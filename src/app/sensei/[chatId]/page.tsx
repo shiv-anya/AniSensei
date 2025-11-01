@@ -77,10 +77,10 @@ export default function ChatsById() {
     getChatMessages();
   }, [user]);
   return (
-    <section className="py-10 w-full">
-      <div className="w-[80%] mx-auto max-w-3xl h-full flex flex-col justify-between gap-8">
+    <section className="pt-24 pb-4 lg:py-10 w-full h-screen">
+      <div className="w-[90%] lg:w-[80%] mx-auto max-w-3xl h-full flex flex-col justify-between gap-0 lg:gap-8">
         <ul
-          className="h-full text-white flex flex-col gap-12 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:w-2
+          className="h-full text-white flex flex-col gap-6 lg:gap-12 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-transparent
   "

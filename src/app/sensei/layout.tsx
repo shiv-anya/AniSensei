@@ -17,7 +17,7 @@ export default async function RootLayout({ children }) {
   const chats = userEmail ? await getChats(userEmail) : [];
 
   return (
-    <section className="h-screen flex">
+    <section className="h-auto flex lg:flex-row flex-col min-h-screen">
       <AsideMenu initialChats={chats} />
       {children}
     </section>

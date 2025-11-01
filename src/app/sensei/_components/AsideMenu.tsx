@@ -66,7 +66,7 @@ export default function AsideMenu({ initialChats }) {
     <>
       {openMenu ? (
         <aside
-          className="h-screen w-[20%] max-w-64 bg-gray-900/50 backdrop-blur-sm p-4 flex flex-col gap-5 overflow-y-auto
+          className="max-lg:fixed h-screen lg:w-[25%] xl:w-[20%] max-w-64 bg-gray-900/50 backdrop-blur-sm p-4 flex flex-col gap-5 overflow-y-auto
                 scrollbar-none
                 [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
@@ -115,7 +115,7 @@ export default function AsideMenu({ initialChats }) {
           </div>
         </aside>
       ) : (
-        <aside className="h-screen w-18 text-2xl flex justify-center bg-gray-900/50 backdrop-blur-sm p-4 border-r border-gray-700 shadow-r-lg shadow-black">
+        <aside className="max-lg:fixed h-18 lg:h-screen w-full lg:w-18 text-2xl flex lg:justify-center max-lg:items-center bg-gray-900/50 backdrop-blur-sm p-4 border-b lg:border-r border-gray-700 shadow-r-lg shadow-black">
           <GoSidebarExpand
             className="cursor-pointer"
             title={openMenu ? "close menu" : "open menu"}
