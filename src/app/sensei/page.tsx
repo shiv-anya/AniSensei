@@ -56,7 +56,7 @@ export default function SenseiSearch() {
   }, [subIndex, index, deleting]);
 
   return (
-    <div className="w-full max-lg:h-full flex justify-center items-center">
+    <div className="w-full max-lg:h-screen flex justify-center items-center">
       <div className="w-[80%] mx-auto max-w-4xl">
         <div className="bg-white/10 rounded-full px-4 lg:px-8 pr-2 lg:pr-4 w-full shadow-animecard flex justify-between items-center border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
           <input

@@ -8,15 +8,22 @@ import { useEffect, useState } from "react";
 import { GoSidebarExpand } from "react-icons/go";
 import { LiaTimesCircleSolid } from "react-icons/lia";
 
-const ListItems = ({ chat, params, user, setChats }) => {
+const ListItems = ({ chat, params, user, setChats, setOpenMenu }) => {
   const router = useRouter();
   const [showDelete, setShowDelete] = useState(false);
+  const [width] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
+  console.log(width);
   return (
     <Link
       href={`/sensei/${chat._id}`}
       key={chat._id}
       onMouseEnter={() => setShowDelete(true)}
       onMouseLeave={() => setShowDelete(false)}
+      onClick={() => {
+        if (width <= 768) setOpenMenu(false);
+      }}
     >
       <li
         className={`hover:bg-white/10 rounded-lg px-4 py-2 transition duration-400 ${
@@ -48,10 +55,11 @@ const ListItems = ({ chat, params, user, setChats }) => {
 
 export default function AsideMenu({ initialChats }) {
   const router = useRouter();
-  const [openMenu, setOpenMenu] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
   const params = useParams();
   const { user } = useAuth();
   const [chats, setChats] = useState(initialChats);
+
   // useEffect(() => {
   //   const getChatMessages = async () => {
   //     if (!user) localStorage.clear();
@@ -103,6 +111,7 @@ export default function AsideMenu({ initialChats }) {
                       params={params}
                       user={user}
                       setChats={setChats}
+                      setOpenMenu={setOpenMenu}
                     />
                   ))}
                 </ul>
