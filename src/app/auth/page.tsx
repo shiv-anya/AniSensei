@@ -30,13 +30,15 @@ export default function Login() {
     });
   };
   return (
-    <section className="h-screen w-full bg-black bg-contain bg-right-top bg-no-repeat bg-[url('/assets/superman.jpg')] flex flex-col items-center">
+    <section className="max-md:px-8 h-screen w-full bg-black bg-contain bg-right-top bg-no-repeat bg-[url('/assets/superman.jpg')] flex flex-col items-center">
       {message && <p className="fixed right-5 top-5 text-3xl">{message}</p>}
       <div className="flex flex-col gap-8 justify-center items-center absolute left-0 top-0 h-screen w-full bg-black/30 p-8">
         <Link href={"/"} className="z-30">
-          <h2 className="text-4xl font-semibold font-lucky">Anisensei</h2>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold font-lucky">
+            Anisensei
+          </h2>
         </Link>
-        <div className="bg-[#1b1b1b]/50 p-10 backdrop-blur-sm w-1/4 h-[85%] max-h-[500px] rounded-xl flex flex-col justify-center gap-4 max-w-96">
+        <div className="bg-[#1b1b1b]/50 p-10 backdrop-blur-sm 2xl:w-1/4 h-[85%] max-h-[500px] rounded-xl flex flex-col justify-center gap-4 max-w-96">
           <div>
             <h2 className="text-gray-600 text-2xl font-semibold">
               <span
@@ -98,9 +100,9 @@ export default function Login() {
                     "Sign Up"
                   )}
                 </button>
-                <p className="text-xs text-gray-600 font-semibold cursor-pointer">
+                {/* <p className="text-xs text-gray-600 font-semibold cursor-pointer">
                   Forgot Password?
-                </p>
+                </p> */}
               </div>
             </form>
           </div>

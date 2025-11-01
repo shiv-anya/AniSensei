@@ -123,8 +123,10 @@ export const History = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="mb-8 w-full">
-        <h2 className="text-5xl font-semibold">Watch History</h2>
+      <div className="mb-8 max-md:mb-0 w-full">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold">
+          Watch History
+        </h2>
         <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-3"></div>
       </div>
       <div className="h-[82%] w-full">
@@ -140,7 +142,7 @@ export const History = () => {
           >
             {animeList.map((data) => (
               <li key={data._id} className="w-full h-fit">
-                <div className="w-full h-[20vh] max-h-36 rounded-2xl">
+                <div className="w-full h-40 md:h-36 lg:h-[20vh] max-h-36 rounded-2xl">
                   <AnimeCard
                     anime={data.anime}
                     lastWatched={data.lastWatched}

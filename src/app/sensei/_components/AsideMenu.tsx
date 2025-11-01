@@ -14,7 +14,6 @@ const ListItems = ({ chat, params, user, setChats, setOpenMenu }) => {
   const [width] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
-  console.log(width);
   return (
     <Link
       href={`/sensei/${chat._id}`}

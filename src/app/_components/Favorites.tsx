@@ -30,7 +30,9 @@ export const Favorites = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="mb-8 w-full">
-        <h2 className="text-5xl font-semibold">Favorites</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold">
+          Favorites
+        </h2>
         <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-3"></div>
       </div>
       <div className="h-[82%] w-full">
@@ -42,11 +44,11 @@ export const Favorites = () => {
   [&::-webkit-scrollbar-track]:bg-gray-900
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-thumb]:bg-blue-500
-  [&::-webkit-scrollbar-thumb]:rounded-full grid grid-cols-4 gap-4 pr-4"
+  [&::-webkit-scrollbar-thumb]:rounded-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pr-4"
           >
             {animeList.map((anime) => (
               <li key={anime.id}>
-                <div className="overflow-hidden h-[30vh] max-h-48 rounded-2xl">
+                <div className="overflow-hidden h-40 md:h-36 lg:h-[30vh] max-h-48 rounded-2xl">
                   <AnimeCard anime={anime} />
                 </div>
                 <button

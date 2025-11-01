@@ -65,12 +65,14 @@ export const EditProfile = ({ user }) => {
   return (
     <div className="w-full flex flex-col">
       <div className="mb-8 w-full">
-        <h2 className="text-5xl font-semibold">Edit Profile</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold">
+          Edit Profile
+        </h2>
         <div className="w-[30%] rounded-full bg-gradient-to-r from-blue-500 to-transparent h-2 mt-3"></div>
       </div>
       <form className="flex flex-col gap-5 text-sm">
         <input
-          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2"
+          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-full lg:w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2"
           name="name"
           type="text"
           placeholder="Enter name"
@@ -78,14 +80,14 @@ export const EditProfile = ({ user }) => {
           onChange={(e) => setUserName(e.target.value)}
         />
         <input
-          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2"
+          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-full lg:w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2"
           type="password"
           // value={oldPassword}
           onChange={handleCheckOld}
           placeholder="Enter old password"
         />
         <input
-          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2 disabled:bg-gray-900 disabled:cursor-not-allowed
+          className="bg-black/50 py-3 px-5 outline-none rounded-lg w-full lg:w-3/4 focus:border-2 focus:border-blue-400 focus:border-offset-2 disabled:bg-gray-900 disabled:cursor-not-allowed
              disabled:text-gray-400"
           type="password"
           title="Enter correct old password to enable this field"
@@ -94,14 +96,14 @@ export const EditProfile = ({ user }) => {
           onChange={(e) => setNewPassword(e.target.value)}
         />
         <input
-          className="bg-black/50  outline-none rounded-lg w-3/4 cursor-pointer file:bg-blue-400 file:text-white file:py-2 file:px-4 file:mr-4
+          className="bg-black/50  outline-none rounded-lg w-full lg:w-3/4 cursor-pointer file:bg-blue-400 file:text-white file:py-2 file:px-4 file:mr-4
     file:cursor-pointer"
           type="file"
           placeholder="Enter photo of choice"
           onChange={handleAvatarChange}
         />
         <button
-          className="bg-blue-400 hover:bg-blue-500 transition duration-700 w-[20%] rounded-3xl px-5 py-2 mt-8 cursor-pointer"
+          className="bg-blue-400 hover:bg-blue-500 transition duration-700 w-fit rounded-3xl px-5 py-2 mt-8 cursor-pointer"
           onClick={updateUserProfile}
         >
           {isPending ? <BeatLoader size={8} color="white" /> : "Update"}

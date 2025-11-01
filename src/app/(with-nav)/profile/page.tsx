@@ -18,6 +18,9 @@ export default function ProfilePage() {
   const [currentNav, setCurrentNav] = useState("Edit Profile");
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [width] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
   const list = [
     { name: "Edit Profile", icon: <FaRegUserCircle /> },
     { name: "WatchList", icon: <MdOutlineBookmarkBorder /> },
@@ -27,7 +30,9 @@ export default function ProfilePage() {
   ];
 
   const navigationHandler = (name) => {
-    setCurrentNav(name);
+    if (width < 768 && currentNav === name && currentNav.length !== 0) {
+      setCurrentNav("");
+    } else setCurrentNav(name);
     if (name === "Logout") {
       logoutAction();
       router.push("/auth");
@@ -47,11 +52,11 @@ export default function ProfilePage() {
       </section>
     );
   if (!user) return null;
-
+  console.log(currentNav);
   return (
-    <section className="min-h-screen flex justify-center items-center py-32 w-[80%] mx-auto max-w-screen-xl">
-      <div className="h-[550px] w-[80%] bg-gray-900/80 rounded-xl max-h-[600px] backdrop-blur-sm flex shadow-banner">
-        <aside className="w-1/4 h-full bg-black/50 rounded-xl">
+    <section className="min-h-screen flex justify-center items-center py-32 w-[90%] lg:w-[80%] mx-auto max-w-5xl">
+      <div className="h-[100%] w-full bg-gray-900/80 rounded-xl md:max-h-[600px] backdrop-blur-sm flex shadow-banner">
+        <aside className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 h-full bg-black/50 rounded-xl">
           <div className="w-full">
             <div
               className={`h-48 w-full rounded-t-xl bg-cover bg-no-repeat relative`}
@@ -68,20 +73,41 @@ export default function ProfilePage() {
           </div>
           <ul className="rounded-b-xl flex flex-col gap-7 p-4 py-8">
             {list.map((el) => (
-              <li
-                key={el.name}
-                className="flex items-center gap-4 cursor-pointer"
-                onClick={() => navigationHandler(el.name)}
-              >
-                <div className="text-blue-500">
-                  {el.name === currentNav && el.icon}
+              <li key={el.name} className="flex flex-col gap-4">
+                <div
+                  className="flex items-center gap-4 cursor-pointer"
+                  onClick={() => navigationHandler(el.name)}
+                >
+                  <div className="text-blue-500">
+                    {el.name === currentNav && el.icon}
+                  </div>
+                  <p>{el.name}</p>
                 </div>
-                <p>{el.name}</p>
+                {currentNav === "Edit Profile" && el.name === currentNav && (
+                  <div className="hidden max-md:block px-8 py-4 max-h-72 overflow-y-auto">
+                    <EditProfile user={user} />
+                  </div>
+                )}
+                {currentNav === "WatchList" && el.name === currentNav && (
+                  <div className="hidden max-md:block px-8 py-4 max-h-72 overflow-y-auto">
+                    <WatchList />
+                  </div>
+                )}
+                {currentNav === "Favorites" && el.name === currentNav && (
+                  <div className="hidden max-md:block px-8 py-4 max-h-72 overflow-y-auto">
+                    <Favorites />
+                  </div>
+                )}
+                {currentNav === "History" && el.name === currentNav && (
+                  <div className="hidden max-md:block py-4 max-h-72 overflow-y-auto">
+                    <History />
+                  </div>
+                )}
               </li>
             ))}
           </ul>
         </aside>
-        <div className="w-3/4 p-16">
+        <div className="w-full p-16 hidden md:block">
           {currentNav === "Edit Profile" && <EditProfile user={user} />}
           {currentNav === "WatchList" && <WatchList />}
           {currentNav === "Favorites" && <Favorites />}
