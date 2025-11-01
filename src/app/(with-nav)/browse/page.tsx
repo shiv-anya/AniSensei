@@ -36,16 +36,18 @@ export default function Browse() {
       <div className="relative top-32">
         <div className="flex justify-between items-center">
           <div>
-            <div className="flex gap-2 items-center text-blue-500 text-4xl font-bold">
+            <div className="flex gap-2 items-center text-blue-500 text-lg sm:text-2xl lg:text-4xl font-bold">
               <span>
                 <MdLocalMovies />
               </span>
               <h2>Browse</h2>
             </div>
-            <p className="text-gray-400 mt-2">Watch cinematic masterpieces</p>
+            <p className="text-gray-400 mt-2 max-sm:text-sm">
+              Watch cinematic masterpieces
+            </p>
           </div>
           <div
-            className="cursor-pointer bg-gray-900 px-6 py-2 rounded-xl flex gap-2 items-center"
+            className="cursor-pointer bg-gray-900 px-2 sm:px-6 py-2 rounded-xl flex gap-2 items-center"
             onClick={() => setShowFilter((prev) => !prev)}
           >
             <span>
@@ -65,9 +67,9 @@ export default function Browse() {
         </div>
         {showFilter && (
           <div
-            className={`z-40 bg-black/30 border border-gray-600 rounded-2xl mt-5 backdrop-blur-sm sticky top-28 flex justify-between p-5`}
+            className={`z-40 bg-black/30 border border-gray-600 rounded-2xl mt-5 backdrop-blur-sm sticky top-28 flex flex-col lg:flex-row justify-between p-5`}
           >
-            <div className="flex items-center gap-5">
+            <div className="flex flex-col lg:flex-row items-center gap-5">
               <Dropdown
                 label="format"
                 options={[
@@ -107,7 +109,7 @@ export default function Browse() {
                 value={filters.status}
               />
             </div>
-            <div className="flex gap-5 items-center">
+            <div className="flex gap-5 items-center max-lg:justify-center max-lg:mt-5">
               <button
                 className="cursor-pointer"
                 onClick={() => {

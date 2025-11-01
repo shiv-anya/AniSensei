@@ -73,7 +73,7 @@ export default function ListCarousel({
         maxHeight: `${responsiveMaxH}px`,
       }}
     >
-      <div className="h-[10%] text-2xl flex justify-between py-2 mb-8 items-center">
+      <div className="h-[10%] text-xl lg:text-2xl flex justify-between py-2 mb-8 items-center">
         <div className="flex gap-2 items-center">
           <span className="hover:animate-shake text-blue-500">{icon}</span>
           <h2 className="capitalize font-semibold">{title}</h2>

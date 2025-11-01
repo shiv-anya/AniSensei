@@ -74,11 +74,11 @@ export default function AnimesList({ query, filters }) {
       </div>
       {animeList.length > 0 ? (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {animeList.map((anime) => (
               <div
                 key={anime.id}
-                className="overflow-hidden h-56 md:h-64 lg:h-[35vh] max-h-72 rounded-2xl"
+                className="overflow-hidden h-40 sm:h-56 md:h-64 lg:h-[35vh] max-h-72 rounded-2xl"
               >
                 <AnimeCard anime={anime} />
               </div>
@@ -91,12 +91,12 @@ export default function AnimesList({ query, filters }) {
           )}
         </>
       ) : (
-        <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2 max-h-96">
+        <div className="h-[50vh] bg-black/30 border border-gray-600 rounded-2xl flex flex-col items-center justify-center gap-2 max-h-96 p-4 md:p-4">
           <span className="text-blue-400/50 text-6xl">
             <MdLocalMovies />
           </span>
           <h2 className="font-bold text-2xl">No results found.</h2>
-          <p className="text-gray-400">
+          <p className="text-gray-400 max-lg:text-center">
             No results match your current filter criteria. Try adjusting your
             filters, genres selection or search term.
           </p>

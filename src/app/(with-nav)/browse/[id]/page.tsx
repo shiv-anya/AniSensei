@@ -123,24 +123,24 @@ export default function AnimeInfo() {
   }
   return (
     <section className="h-auto pt-30 pb-10">
-      <div className="w-[80%] mx-auto max-w-screen-xl">
+      <div className="w-[90%] lg:w-[80%] mx-auto max-w-screen-xl">
         <Link href="/" className="inline">
           <button className="flex items-center justify-between backdrop-blur-sm px-5 py-2 rounded-sm transition duration-700 hover:bg-gray-400/50 cursor-pointer">
             <FaArrowLeft /> <span className="ml-5">Home</span>
           </button>
         </Link>
-        <div className="w-full mt-5 flex gap-16">
-          <aside className="w-[20%]">
+        <div className="w-full mt-5 flex flex-col lg:flex-row gap-16">
+          <aside className="w-full lg:w-[20%] max-lg:flex flex-col items-center">
             {anime && (
               <Image
                 src={anime?.coverImage?.extraLarge}
                 width={150}
                 height={200}
                 alt="cover image"
-                className="rounded-xl w-full bg-gradient-to-b from-black/80 via-transparent via-50% to-black/80 to-98%"
+                className="rounded-xl w-full object-cover max-lg:max-w-64 max-md:max-w-52 max-sm:max-w-48 lg:w-full bg-gradient-to-b from-black/80 via-transparent via-50% to-black/80 to-98%"
               />
             )}
-            <div className="w-full mt-5 flex flex-col gap-2">
+            <div className="w-full mt-5 flex flex-col max-lg:items-center gap-2">
               {anime?.status !== "CANCELLED" &&
                 anime?.status !== "NOT_YET_RELEASED" && (
                   <Link
@@ -151,7 +151,7 @@ export default function AnimeInfo() {
                         .toLowerCase() ||
                       anime?.title?.romaji?.split(" ").join("-").toLowerCase()
                     }`}
-                    className="w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
+                    className="w-full md:w-1/2 sm:w-1/3 lg:w-full py-3 text-sm transition duration-700 hover:bg-blue-500/80 cursor-pointer font-semibold flex justify-center items-center gap-2 rounded-lg bg-blue-500"
                   >
                     <IoPlayOutline size={18} />
                     Watch Now
@@ -161,6 +161,7 @@ export default function AnimeInfo() {
                 <Link
                   href={`https://www.youtube.com/watch?v=${anime?.trailer.id}`}
                   target="_blank"
+                  className="w-full md:w-1/2 sm:w-1/3 lg:w-full"
                 >
                   <button className="w-full py-3 text-sm transition duration-700 hover:bg-gray-600 cursor-pointer border border-gray-500 font-semibold flex justify-center items-center gap-2 rounded-lg bg-gray-700 text-red-400">
                     <PiYoutubeLogoLight />{" "}
@@ -169,7 +170,7 @@ export default function AnimeInfo() {
                 </Link>
               )}
             </div>
-            <div className="my-5 flex flex-col gap-2">
+            <div className="my-5 flex flex-col gap-2 w-full md:w-1/2 sm:w-1/3 lg:w-full">
               {isSuccessFavorites ? (
                 <button
                   className="w-full px-2 py-2 flex justify-center items-center bg-black/20 rounded-lg gap-2 transition duration-700 hover:bg-black/50 text-sm"
@@ -241,7 +242,7 @@ export default function AnimeInfo() {
                 </button>
               )}
             </div>
-            <div className="text-sm flex flex-col gap-5 bg-gray-900 backdrop-blur-sm border border-gray-600 px-4 py-5 rounded-lg">
+            <div className="w-full md:w-1/2 sm:w-1/3 lg:w-full text-sm flex flex-col gap-5 bg-gray-900 backdrop-blur-sm border border-gray-600 px-4 py-5 rounded-lg">
               <h2 className="text-blue-500 flex gap-2 items-center">
                 <RxInfoCircled size={18} />
                 <span className="text-white text-lg">Media Info</span>
@@ -271,26 +272,26 @@ export default function AnimeInfo() {
               </ul>
             </div>
           </aside>
-          <article className="w-[80%]">
-            <h2 className="font-bold text-6xl">
+          <article className="lg:w-[80%] w-full">
+            <h2 className="font-bold text-2xl md:text-4xl lg:text-6xl">
               {anime?.title.english ||
                 anime?.title?.romaji + " " + `(${anime?.startDate.year})`}
             </h2>
-            <div className="flex text-sm gap-3 my-5">
+            <div className="flex text-sm gap-2 lg:gap-3 my-5">
               <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-                <span className="text-blue-500 text-base">
+                <span className="text-blue-500 text-xs lg:text-base">
                   <CiCalendar />
                 </span>
                 {formattedDate}
               </div>
               <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-                <span className="text-blue-500 text-base">
+                <span className="text-blue-500 text-xs lg:text-base">
                   <MdOutlineMovieFilter />
                 </span>
                 {anime?.format}
               </div>
               <div className="border border-gray-600 bg-gray-800/50 backdrop-blur-sm px-3 py-1 rounded-full flex gap-2 items-center font-semibold">
-                <span className="text-yellow-500 text-base">
+                <span className="text-yellow-500 text-xs lg:text-base">
                   <FaStar />
                 </span>
                 {year ? anime?.averageScore : 0}
@@ -299,7 +300,9 @@ export default function AnimeInfo() {
             <div>
               <div
                 className={`bg-black/30 flex p-2 rounded-xl ${
-                  anime?.format === "MOVIE" ? "w-[40%]" : "w-[60%]"
+                  anime?.format === "MOVIE"
+                    ? "sm:w-[40%] w-full"
+                    : "sm:w-[60%] w-full"
                 }`}
               >
                 <button
@@ -328,7 +331,7 @@ export default function AnimeInfo() {
                   <div>
                     <h2 className="flex items-center text-blue-500 gap-2 my-5">
                       <RxInfoCircled size={20} />{" "}
-                      <span className="text-3xl font-semibold text-white">
+                      <span className="text-xl lg:text-3xl font-semibold text-white">
                         Overview
                       </span>
                     </h2>
@@ -339,11 +342,11 @@ export default function AnimeInfo() {
                   <div>
                     <h2 className="flex items-center text-blue-500 gap-2 my-5">
                       <TbTag />
-                      <span className="text-3xl font-semibold text-white">
+                      <span className="text-xl lg:text-3xl font-semibold text-white">
                         Genres
                       </span>
                     </h2>
-                    <ul className="flex gap-2 text-sm">
+                    <ul className="flex flex-wrap gap-2 text-sm">
                       {anime?.genres.map((el) => {
                         return (
                           <div
@@ -359,7 +362,7 @@ export default function AnimeInfo() {
                 </div>
               )}
               {activeTab === "seasons" && (
-                <p className="mt-8 text-3xl font-semibold">
+                <p className="mt-8 text-lg lg:text-3xl font-semibold">
                   {"We don't have resources yet. :)"}
                 </p>
               )}

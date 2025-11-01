@@ -86,10 +86,10 @@ export default function Genres() {
   };
   const genres = useDebounce(genresArray, 1000);
   return (
-    <section className="h-auto min-h-screen w-[80%] mx-auto py-40 max-w-screen-xl">
+    <section className="h-auto min-h-screen w-[90%] lg:w-[80%] mx-auto py-32 md:py-40 max-w-screen-xl">
       <div>
         <div>
-          <div className="flex gap-2 items-center text-blue-500 text-4xl font-bold">
+          <div className="flex gap-2 items-center text-blue-500 text-lg sm:text-2xl lg:text-4xl font-bold">
             <span>
               <HiOutlineSparkles />
             </span>
@@ -98,11 +98,11 @@ export default function Genres() {
           <p className="text-gray-400 mt-2">Find Shows That Match Your Vibe</p>
         </div>
         <div className="w-full">
-          <ul className="p-4 my-8 rounded-xl flex flex-wrap  gap-2 justify-center">
+          <ul className="p-0 md:p-4 my-8 rounded-xl flex flex-wrap gap-2 justify-center">
             {AniListGenres.map((el) => (
               <li key={el}>
                 <button
-                  className={`bg-black/20 rounded-3xl hover:bg-black/50 px-5 py-2 transition duration ${
+                  className={`max-sm:text-sm bg-black/20 rounded-3xl hover:bg-black/50 px-2 md:px-5 py-2 transition duration ${
                     genresArray.includes(el)
                       ? "bg-blue-500/50 hover:bg-blue-500 outline-1 outline-blue-400 outline-offset-2"
                       : ""
@@ -114,7 +114,7 @@ export default function Genres() {
               </li>
             ))}
             <button
-              className={`bg-black/20 rounded-3xl hover:bg-black/50 px-5 py-2 transition duration flex gap-2 items-center hover:bg-blue-500"
+              className={`bg-black/20 rounded-3xl hover:bg-black/50 px-2 max-sm:text-sm md:px-5 py-2 transition duration flex gap-2 items-center hover:bg-blue-500"
                 `}
               onClick={() => {
                 setGenresArray([]);

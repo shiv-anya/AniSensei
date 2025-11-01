@@ -29,7 +29,7 @@ export default function Dropdown({ label, options, value, onChange }) {
     <div className="relative inline-block text-left">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="text-white px-4 py-2 rounded-md flex justify-between items-center w-48 capitalize focus:shadow-dropdown shadow-blue-500"
+        className="max-md:text-sm text-white px-4 py-0 md:py-2 rounded-md flex justify-between items-center w-48 capitalize md:focus:shadow-dropdown shadow-blue-500"
         ref={buttonRef}
       >
         {value || label} {/* show selected value or fallback label */}
@@ -40,8 +40,8 @@ export default function Dropdown({ label, options, value, onChange }) {
 
       <div
         className={`
-          absolute left-0 mt-2 w-48 bg-gray-900 rounded-xl shadow-lg overflow-hidden
-          transition-all duration-300 ease-in-out origin-top
+          absolute left-0 mt-2 w-48 bg-gray-900 rounded-xl shadow-lg overflow-visible
+          transition-all duration-300 ease-in-out origin-top z-20 max-md:text-sm
           ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}
         `}
       >

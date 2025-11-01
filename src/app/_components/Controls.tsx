@@ -1,6 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { BsFullscreen, BsVolumeMuteFill } from "react-icons/bs";
+import { FaAngleLeft } from "react-icons/fa6";
 import { IoIosSkipForward, IoMdPause, IoMdPlay } from "react-icons/io";
 import {
   MdFullscreen,
@@ -12,6 +14,7 @@ import {
 import { HashLoader } from "react-spinners";
 
 export default function Controls({
+  id,
   heading,
   playing,
   onPlayPause,
@@ -43,9 +46,16 @@ export default function Controls({
         playing ? "bg-transparent" : "bg-black/60"
       } absolute top-0 left-0 z-10 p-8 flex flex-col items-center justify-between`}
     >
-      <h2 className="text-3xl font-semibold capitalize">
-        {heading?.split("-").join(" ")}
-      </h2>
+      <div className="flex gap-8 items-center w-full">
+        <Link href={`/browse/${id}`}>
+          <button className="justify-self-start hover:bg-white/20 bg-white/10 transition duration-700 rounded-full p-1 lg:p-2">
+            <FaAngleLeft />
+          </button>
+        </Link>
+        <h2 className="justify-self-center text-xl lg:text-3xl font-semibold capitalize">
+          {heading?.split("-").join(" ")}
+        </h2>
+      </div>
       {buffer && (
         <HashLoader
           color="#60A5FA

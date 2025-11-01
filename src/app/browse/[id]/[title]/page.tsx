@@ -212,6 +212,7 @@ export default function VideoPlayer() {
         onBufferEnd={() => setPlayerState({ ...playerState, buffer: false })}
       />
       <Controls
+        id={anime?.id}
         heading={anime?.title?.english || anime?.title?.romaji}
         playing={playerState.playing}
         muted={playerState.muted}
