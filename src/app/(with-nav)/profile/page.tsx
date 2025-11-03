@@ -52,7 +52,7 @@ export default function ProfilePage() {
       </section>
     );
   if (!user) return null;
-  console.log(currentNav);
+
   return (
     <section className="min-h-screen flex justify-center items-center py-32 w-[90%] lg:w-[80%] mx-auto max-w-5xl">
       <div className="h-[100%] w-full bg-gray-900/80 rounded-xl md:max-h-[600px] backdrop-blur-sm flex shadow-banner">

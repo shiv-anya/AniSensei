@@ -1,10 +1,11 @@
 "use client";
 import { useAuth } from "@/app/_context/AuthContext";
+import { useChats } from "@/app/_context/ChatContext";
 import { deleteChat, getChats } from "@/app/actions/chats";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GoSidebarExpand } from "react-icons/go";
 import { LiaTimesCircleSolid } from "react-icons/lia";
 
@@ -30,11 +31,11 @@ const ListItems = ({ chat, params, user, setChats, setOpenMenu }) => {
         }`}
         title={chat.title}
       >
-        <p className="flex justify-between items-center">
+        <p className="flex justify-between lg:items-center max-lg:gap-2">
           {chat.title.split(" ").splice(0, 4).join(" ")}{" "}
-          {showDelete && (
+          {
             <span
-              className={`text-lg ${showDelete ? "block" : "hidden"}`}
+              className={`text-lg ${showDelete ? "block" : "lg:hidden"}`}
               onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -45,35 +46,52 @@ const ListItems = ({ chat, params, user, setChats, setOpenMenu }) => {
             >
               <LiaTimesCircleSolid />
             </span>
-          )}
+          }
         </p>
       </li>
     </Link>
   );
 };
 
-export default function AsideMenu({ initialChats }) {
+export default function AsideMenu() {
+  const asideRef = useRef(null);
   const router = useRouter();
-  const [openMenu, setOpenMenu] = useState(false);
+  const [width] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
+  const [openMenu, setOpenMenu] = useState(false); //width >= 1024 ? true : false
   const params = useParams();
   const { user } = useAuth();
-  const [chats, setChats] = useState(initialChats);
+  const { chats, setChats } = useChats();
 
-  // useEffect(() => {
-  //   const getChatMessages = async () => {
-  //     if (!user) localStorage.clear();
-  //     else {
-  //       const res = await getChats(user?.email);
-  //       setChats((prev) => [res]);
-  //     }
-  //   };
-  //   getChatMessages();
-  // }, [user]);
+  useEffect(() => {
+    // Only runs on client
+    if (window.innerWidth >= 1024) {
+      setOpenMenu(true);
+    }
+    const handleClickOutside = (event) => {
+      if (asideRef.current && !asideRef.current.contains(event.target)) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const getChatMessages = async () => {
+      const res = await getChats(user?.email);
+      setChats(res);
+    };
+    if (user) getChatMessages();
+  }, [user]);
   return (
     <>
       {openMenu ? (
         <aside
-          className="max-lg:fixed h-screen lg:w-[25%] xl:w-[20%] max-w-64 bg-gray-900/50 backdrop-blur-sm p-4 flex flex-col gap-5 overflow-y-auto
+          ref={asideRef}
+          className="max-lg:fixed h-screen w-full lg:w-[25%] xl:w-[20%] max-w-64 bg-gray-900/50 backdrop-blur-sm p-4 flex flex-col gap-5 overflow-y-auto
                 scrollbar-none
                 [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
@@ -123,12 +141,21 @@ export default function AsideMenu({ initialChats }) {
           </div>
         </aside>
       ) : (
-        <aside className="max-lg:fixed h-18 lg:h-screen w-full lg:w-18 text-2xl flex lg:justify-center max-lg:items-center bg-gray-900/50 backdrop-blur-sm p-4 border-b lg:border-r border-gray-700 shadow-r-lg shadow-black">
+        <aside className="max-lg:fixed h-18 lg:h-screen w-full lg:w-18 text-2xl flex justify-between lg:justify-center max-lg:items-center bg-gray-900/50 backdrop-blur-sm p-4 border-b lg:border-r border-gray-700 shadow-r-lg shadow-black">
           <GoSidebarExpand
             className="cursor-pointer"
             title={openMenu ? "close menu" : "open menu"}
             onClick={() => setOpenMenu(true)}
           />
+          <Link href={"/"} className="block lg:hidden">
+            <Image
+              src={"/favicon.png"}
+              width={40}
+              height={40}
+              alt="logo"
+              priority
+            />
+          </Link>
         </aside>
       )}
     </>

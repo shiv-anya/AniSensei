@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/app/_context/AuthContext";
+import { useChats } from "@/app/_context/ChatContext";
 import { createChat } from "@/app/actions/chats";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
@@ -21,12 +22,33 @@ export default function SenseiSearch() {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  const { setChats } = useChats();
 
   const createChatHandler = async () => {
     const userMessage = inputRef.current.value;
-    const res = await createChat(user?.email, userMessage);
-
-    router.push(`/sensei/${res._id}`);
+    if (user) {
+      const res = await createChat(user?.email, userMessage);
+      setChats(res);
+      router.push(`/sensei/${res._id}`);
+    } else {
+      const newChat = {
+        _id: crypto.randomUUID(),
+        title: "New Chat",
+        messages: [
+          {
+            _id: crypto.randomUUID(),
+            role: "user",
+            content: userMessage,
+            loading: false,
+            structured: "",
+          },
+          { _id: crypto.randomUUID(), role: "bot", content: "", loading: true },
+        ],
+      };
+      localStorage.setItem("temporary-chat", JSON.stringify(newChat));
+      router.push("/sensei/temporary-chat");
+      inputRef.current.value = "";
+    }
   };
 
   useEffect(() => {
@@ -64,6 +86,9 @@ export default function SenseiSearch() {
             placeholder={placeholder}
             className="w-[95%] py-4 text-base text-white placeholder:text-gray-300 outline-none"
             ref={inputRef}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") createChatHandler();
+            }}
           />
           <button
             className="text-lg border border-gray-600 p-2 rounded-full shadow-search shadow-blue-400/40 bg-gray-900 transition ease-in duration-400 cursor-pointer hover:bg-[rgba(255,255,255,0.3)] hover:border-gray-500"

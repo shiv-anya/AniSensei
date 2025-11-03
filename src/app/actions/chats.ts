@@ -50,12 +50,7 @@ export async function addMessage(email, chatId, message) {
   return JSON.parse(JSON.stringify(chat));
 }
 
-export async function updateBotResponse(
-  email,
-  chatId,
-  // messageIndex,
-  geminiResponse
-) {
+export async function updateBotResponse(email, chatId, geminiResponse) {
   await connectDB();
   const user = await User.findOne({ email });
   if (!user) throw new Error("User not found");
@@ -77,7 +72,6 @@ export async function updateBotResponse(
   }
 
   await user.save();
-  // return chat;
 }
 
 export async function deleteChat(email, chatId) {

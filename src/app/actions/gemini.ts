@@ -16,7 +16,7 @@ export async function generateGeminiResponse({ chatId, userMessage, user }) {
         Do NOT include any commentary or explanations outside JSON.
 
         When the user asks something: (only when asked for suggestions else simply answer their query)
-        - Recommend exactly 10 anime.
+        - Recommend exactly 10 anime when number not provided, if provided go with that number and don't exceed more than 10, no matter what user enters.
         - For each anime, include a short 1-line reason why it matches the user's taste.
         - Always reply in pure JSON format (no markdown, no extra text).
         - The JSON must have this structure:
@@ -70,7 +70,7 @@ User asked: ${userMessage}
   }
 
   // Optionally, you can update DB directly here:
-  if (user && chatId) {
+  if (user && chatId !== "temporary-chat") {
     await updateBotResponse(user?.email, chatId, structured);
   }
 

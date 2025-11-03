@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import User from "../_lib/models/User";
 import { getUserProfileFromToken } from "../actions/auth";
 
 const AuthContext = createContext(null);

@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+import { ChatProvider } from "@/app/_context/ChatContext";
 import { getUserProfileFromToken } from "@/app/actions/auth";
 import { getChats } from "@/app/actions/chats";
 import AsideMenu from "@/app/sensei/_components/AsideMenu";
@@ -11,15 +12,12 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const user = await getUserProfileFromToken();
-  const userEmail = user?.email;
-
-  const chats = userEmail ? await getChats(userEmail) : [];
-
   return (
-    <section className="h-auto flex lg:flex-row flex-col min-h-screen">
-      <AsideMenu initialChats={chats} />
-      {children}
-    </section>
+    <ChatProvider>
+      <section className="h-auto flex lg:flex-row flex-col min-h-screen">
+        <AsideMenu />
+        {children}
+      </section>
+    </ChatProvider>
   );
 }
