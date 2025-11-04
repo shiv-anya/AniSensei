@@ -66,7 +66,8 @@ export const loginAction = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) return { error: "User doesn't exist." };
 
-  const isMatch = checkPasswordIsRight(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) return { error: "Invalid password, try again." };
 
   const token = jwt.sign({ email: user.email }, JWT_SECRET, {
