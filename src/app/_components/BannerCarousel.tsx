@@ -5,6 +5,10 @@ import { Banner } from "./Banner";
 
 const Carousel = ({ movies }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const goToPrevious = () => {
     const isFirst = currentIndex === 0;
@@ -19,6 +23,15 @@ const Carousel = ({ movies }) => {
   };
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsTouchDevice(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       goToNext();
     }, 5000);
@@ -26,13 +39,42 @@ const Carousel = ({ movies }) => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const moveX = e.touches[0].clientX - startX;
+    setTranslateX(moveX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    if (translateX > 100) {
+      goToPrevious();
+    } else if (translateX < -100) {
+      goToNext();
+    }
+    setIsDragging(false);
+    setTranslateX(0);
+  };
+
   return (
-    <div className="h-[80vh] relative w-full mx-auto overflow-hidden top-28 shadow-banner rounded-[2.5rem] mb-40 lg:mb-56 max-h-[500px] md:max-h-[570px]">
+    <div
+      className="h-[80vh] relative w-full mx-auto overflow-hidden top-28 shadow-banner rounded-[2.5rem] mb-40 lg:mb-56 max-h-[500px] md:max-h-[570px]"
+      onTouchStart={isTouchDevice ? handleTouchStart : undefined}
+      onTouchMove={isTouchDevice ? handleTouchMove : undefined}
+      onTouchEnd={isTouchDevice ? handleTouchEnd : undefined}
+    >
       {/* Slides container */}
       <div
         className="h-full flex transition-transform duration-700 ease-in-out"
         style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
+          transform: `translateX(calc(-${currentIndex * 100}% + ${
+            isTouchDevice ? translateX : 0
+          }px))`,
         }}
       >
         {movies.map((anime, index) => (
