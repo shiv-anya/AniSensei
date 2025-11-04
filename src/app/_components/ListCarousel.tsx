@@ -2,7 +2,7 @@
 
 import { FaChevronLeft } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AnimeCard from "./AnimeCard";
 
 export default function ListCarousel({
@@ -17,8 +17,13 @@ export default function ListCarousel({
   const [itemsPerSlide, setItemsPerSlide] = useState(itemsCountPerPage);
   const [responsiveHeight, setResponsiveHeight] = useState(height);
   const [responsiveMaxH, setResponsiveMaxH] = useState(maxH);
+  const [isTouchEnabled, setIsTouchEnabled] = useState(false);
   const totalItems = animes.length;
-  const pages = chunkArray(animes, itemsPerSlide); // array of pages
+
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const pages = chunkArray(animes, itemsPerSlide);
   const totalPages = pages.length;
 
   function chunkArray(arr, n) {
@@ -32,6 +37,7 @@ export default function ListCarousel({
   useEffect(() => {
     const updateItemsPerSlide = () => {
       const width = window.innerWidth;
+      setIsTouchEnabled(width < 1024); // ✅ enable swipe only below lg
 
       if (width < 640)
         setItemsPerSlide(Math.max(2, Math.floor(itemsCountPerPage / 4)));
@@ -59,11 +65,29 @@ export default function ListCarousel({
   }, [itemsCountPerPage]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1 >= totalPages ? -1 : prev + 1));
+    setCurrentIndex((prev) => (prev + 1 >= totalPages ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+    setCurrentIndex((prev) => (prev - 1 < 0 ? totalPages - 1 : prev - 1));
+  };
+
+  // ✅ Touch handlers
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50; // minimum px distance to trigger swipe
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) handleNext(); // swipe left → next
+      else handlePrev(); // swipe right → prev
+    }
   };
 
   return (
@@ -79,7 +103,7 @@ export default function ListCarousel({
           <span className="text-blue-500">{icon}</span>
           <h2 className="capitalize font-semibold">{title}</h2>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 max-lg:hidden">
           <button
             className="bg-black/50 text-base p-2 rounded-xl hover:bg-blue-500 transition duration-700"
             onClick={handlePrev}
@@ -104,6 +128,9 @@ export default function ListCarousel({
             transform: `translateX(-${currentIndex * itemsPerSlide * 5}%)`,
             width: `${totalPages * 100}%`,
           }}
+          onTouchStart={isTouchEnabled ? handleTouchStart : undefined}
+          onTouchMove={isTouchEnabled ? handleTouchMove : undefined}
+          onTouchEnd={isTouchEnabled ? handleTouchEnd : undefined}
         >
           {pages.map((page, pageIdx) => (
             <li key={pageIdx} className="w-[100%] flex mx-2">
