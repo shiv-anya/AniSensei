@@ -3,8 +3,8 @@ import { MdOutlineLocalMovies } from "react-icons/md";
 
 export default function AnimeCard({ anime }) {
   return (
-    <Link href={`/browse/${anime?.id}`}>
-      <div className="h-full rounded-2xl relative group">
+    <Link href={`/browse/${anime?.id}`} className="bg-black">
+      <div className="h-full rounded-2xl relative group bg-black">
         <div
           className="h-full rounded-2xl absolute left-0 right-0 bg-cover bg-center bg-no-repeat group-hover:scale-105 transition duration-700"
           style={{

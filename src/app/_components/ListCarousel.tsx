@@ -18,6 +18,16 @@ export default function ListCarousel({
   const [responsiveHeight, setResponsiveHeight] = useState(height);
   const [responsiveMaxH, setResponsiveMaxH] = useState(maxH);
   const totalItems = animes.length;
+  const pages = chunkArray(animes, itemsPerSlide); // array of pages
+  const totalPages = pages.length;
+
+  function chunkArray(arr, n) {
+    const pages = [];
+    for (let i = 0; i < arr.length; i += n) {
+      pages.push(arr.slice(i, i + n));
+    }
+    return pages;
+  }
 
   useEffect(() => {
     const updateItemsPerSlide = () => {
@@ -49,20 +59,11 @@ export default function ListCarousel({
   }, [itemsCountPerPage]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev + itemsPerSlide >= totalItems ? 0 : prev + itemsPerSlide
-    );
+    setCurrentIndex((prev) => (prev + 1 >= totalPages ? -1 : prev + 1));
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev - itemsPerSlide < 0
-        ? Math.max(
-            0,
-            totalItems - (totalItems % itemsPerSlide || itemsPerSlide)
-          )
-        : prev - itemsPerSlide
-    );
+    setCurrentIndex((prev) => (prev - 1 < 0 ? 0 : prev - 1));
   };
 
   return (
@@ -75,7 +76,7 @@ export default function ListCarousel({
     >
       <div className="h-[10%] text-xl lg:text-2xl flex justify-between py-2 mb-8 items-center">
         <div className="flex gap-2 items-center">
-          <span className="hover:animate-shake text-blue-500">{icon}</span>
+          <span className="text-blue-500">{icon}</span>
           <h2 className="capitalize font-semibold">{title}</h2>
         </div>
         <div className="flex gap-3">
@@ -85,30 +86,38 @@ export default function ListCarousel({
           >
             <FaChevronLeft />
           </button>
-          <button
-            className="bg-black/50 text-base p-2 rounded-xl hover:bg-blue-500 transition duration-400"
-            onClick={handleNext}
-          >
-            <FaChevronRight />
-          </button>
+          {!(currentIndex < 0) && (
+            <button
+              className="bg-black/50 text-base p-2 rounded-xl hover:bg-blue-500 transition duration-400"
+              onClick={handleNext}
+            >
+              <FaChevronRight />
+            </button>
+          )}
         </div>
       </div>
       <div className="relative w-full h-[90%] mx-auto overflow-hidden">
         <ul
-          className="h-full flex gap-6 transition-transform duration-700 ease-in-out"
+          className="h-full flex transition-transform duration-700 ease-in-out"
           style={{
-            transform: `translateX(-${(currentIndex * 100) / itemsPerSlide}%)`,
+            // transform: `translateX(-${(currentIndex * 100) / itemsPerSlide}%)`,
+            transform: `translateX(-${currentIndex * itemsPerSlide * 5}%)`,
+            width: `${totalPages * 100}%`,
           }}
         >
-          {animes.map((anime, idx) => (
-            <li
-              key={idx}
-              className="flex-none rounded-2xl overflow-hidden"
-              style={{
-                width: `${100 / itemsPerSlide}%`,
-              }}
-            >
-              <AnimeCard anime={anime} />
+          {pages.map((page, pageIdx) => (
+            <li key={pageIdx} className="w-[100%] flex mx-2">
+              {page.map((anime) => (
+                <div
+                  className="flex-none rounded-2xl overflow-hidden mx-2"
+                  style={{
+                    width: `${100 / itemsPerSlide - 1.2}%`,
+                  }}
+                  key={anime.id}
+                >
+                  <AnimeCard anime={anime} />
+                </div>
+              ))}
             </li>
           ))}
         </ul>
