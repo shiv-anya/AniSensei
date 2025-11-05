@@ -52,7 +52,7 @@ export const WatchList = () => {
                   <AnimeCard anime={data.anime} />
                 </div>
                 <button
-                  className="rounded-lg flex border-2 border-red-500 gap-1 justify-center items-center mx-auto my-2 py-2 px-4 cursor-pointer text-red-500 transition duration-500 hover:text-white hover:bg-red-500"
+                  className="rounded-lg flex gap-1 justify-center items-center mx-auto my-2 py-2 px-4 cursor-pointer transition duration-500 text-white bg-red-500 hover:scale-110"
                   onClick={() => handleDeletion(data?.anime?.id)}
                 >
                   {isDeleting && clickedAnimeId === data?._id ? (
