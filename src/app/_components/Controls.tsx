@@ -155,7 +155,7 @@ export default function Controls({
     [&::-moz-range-thumb]:cursor-pointer
   "
                 />
-                <div className="flex gap-2 ml-2 bg-black/30 rounded-full p-2 px-4">
+                <div className="flex gap-2 ml-2 bg-black/30 rounded-full p-2 px-4 lg:text-base text-sm">
                   <p className="text-blue-400">{currentTime}</p> /{" "}
                   <p>{durationTime}</p>
                 </div>
