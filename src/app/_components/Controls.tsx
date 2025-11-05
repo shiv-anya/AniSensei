@@ -31,6 +31,8 @@ export default function Controls({
   buffer,
   onplaybackRateChange,
   toggleFullscreen,
+  currentTime,
+  durationTime,
 }) {
   const [isFullscreen, setIsFullScreen] = useState(false);
   const playbackRates = [0.5, 1, 1.25, 1.5, 2];
@@ -153,6 +155,10 @@ export default function Controls({
     [&::-moz-range-thumb]:cursor-pointer
   "
                 />
+                <div className="flex gap-2 ml-2 bg-black/30 rounded-full p-2 px-4">
+                  <p className="text-blue-400">{currentTime}</p> /{" "}
+                  <p>{durationTime}</p>
+                </div>
               </div>
             </div>
           </div>

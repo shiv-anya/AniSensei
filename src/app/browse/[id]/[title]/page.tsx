@@ -34,7 +34,26 @@ export default function VideoPlayer() {
     seeking: false,
     buffer: false,
   });
-
+  const currentTime = playerRef.current
+    ? playerRef.current.getCurrentTime()
+    : "00:00";
+  const duration = playerRef.current
+    ? playerRef.current.getDuration()
+    : "00:00";
+  const formatTime = (time) => {
+    if (isNaN(time)) {
+      return "00:00";
+    }
+    const date = new Date(time * 1000);
+    const hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds().toString().padStart(2, "0");
+    if (hours) {
+      return `${hours}:${minutes.toString().padStart(2, "0")} `;
+    } else return `${minutes}:${seconds}`;
+  };
+  const formatCurrentTime = formatTime(currentTime);
+  const formatDuration = formatTime(duration);
   const playPauseHandler = () => {
     setPlayerState((prev) => ({ ...prev, playing: !prev.playing }));
   };
@@ -128,13 +147,13 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const id = params.id;
-    // const saved = JSON.parse(localStorage.getItem("progress") || "{}");
-    // const savedProgress = saved[id]?.progress ?? null;
-    // if (savedProgress !== null && playerRef.current) {
-    //   playerRef.current.seekTo(savedProgress / 100);
-    //   setPlayerState((prev) => ({ ...prev, played: savedProgress / 100 }));
-    // }
-    // setProgressLoaded(true);
+    const saved = JSON.parse(localStorage.getItem("progress") || "{}");
+    const savedProgress = saved[id]?.progress ?? null;
+    if (savedProgress !== null && playerRef.current) {
+      playerRef.current.seekTo(savedProgress / 100);
+      setPlayerState((prev) => ({ ...prev, played: savedProgress / 100 }));
+    }
+    setProgressLoaded(true);
     const getAnimeById = async () => {
       try {
         const decodedParamTitle = decodeURIComponent(params.title);
@@ -157,8 +176,7 @@ export default function VideoPlayer() {
   }, []);
 
   useEffect(() => {
-    if (!user?.email) return; // wait until user is available
-
+    if (!user?.email) return;
     const id = params.id;
 
     const loadProgress = async () => {
@@ -167,19 +185,18 @@ export default function VideoPlayer() {
       try {
         // 1️⃣ Try fetching progress from DB
         const data = await getHistoryByAnimeId(user.email, id);
+
         if (data && data.history.progress !== undefined) {
           progress = data.history.progress;
           // console.log("Loaded progress from DB:", progress);
         } else {
           // 2️⃣ Fall back to localStorage
+
           const saved = JSON.parse(localStorage.getItem("progress") || "{}");
           progress = saved[id]?.progress ?? 0;
           // console.log("Loaded progress from localStorage:", progress);
         }
       } catch (err) {
-        console.error("Error loading progress:", err);
-
-        // fallback in case DB fetch fails
         const saved = JSON.parse(localStorage.getItem("progress") || "{}");
         progress = saved[id]?.progress ?? 0;
       }
@@ -188,8 +205,8 @@ export default function VideoPlayer() {
       if (playerRef.current && progress > 0) {
         playerRef.current.seekTo(progress / 100);
         setPlayerState((prev) => ({ ...prev, played: progress / 100 }));
-        setProgressLoaded(true);
       }
+      setProgressLoaded(true);
     };
 
     loadProgress();
@@ -229,6 +246,8 @@ export default function VideoPlayer() {
         onSeekingVolumeUp={volumeSeekMouseUpHandler}
         onplaybackRateChange={playbackRateHandler}
         toggleFullscreen={toggleFullscreen}
+        currentTime={formatCurrentTime}
+        durationTime={formatDuration}
       />
     </section>
   );

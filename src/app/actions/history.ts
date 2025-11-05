@@ -42,6 +42,7 @@ export async function addOrUpdateHistory(animeData, userEmail) {
 
 export async function getHistoryByAnimeId(userEmail, animeId) {
   if (!animeId || !userEmail) return;
+
   await connectDB();
   const user = await User.findOne({ email: userEmail });
   if (!user) {
