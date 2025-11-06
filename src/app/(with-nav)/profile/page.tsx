@@ -16,11 +16,12 @@ import { HashLoader } from "react-spinners";
 
 export default function ProfilePage() {
   const [currentNav, setCurrentNav] = useState("Edit Profile");
-  const { user, loading } = useAuth();
+  const { user, setUser, loading } = useAuth();
   const router = useRouter();
   const [width] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
+
   const list = [
     { name: "Edit Profile", icon: <FaRegUserCircle /> },
     { name: "WatchList", icon: <MdOutlineBookmarkBorder /> },
@@ -28,14 +29,21 @@ export default function ProfilePage() {
     { name: "History", icon: <TbHistory /> },
     { name: "Logout", icon: <IoMdLogOut /> },
   ];
+  const logoutHandler = async () => {
+    const res = await logoutAction();
 
+    if (res.success) {
+      setUser(null);
+      router.refresh();
+      router.push("/auth");
+    }
+  };
   const navigationHandler = (name) => {
     if (width < 768 && currentNav === name && currentNav.length !== 0) {
       setCurrentNav("");
     } else setCurrentNav(name);
     if (name === "Logout") {
-      logoutAction();
-      router.push("/auth");
+      logoutHandler();
     }
   };
 

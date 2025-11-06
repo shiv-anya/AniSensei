@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/app/_context/AuthContext";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(false);
@@ -13,6 +14,7 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { setUser } = useAuth();
 
   const handleInputChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -22,7 +24,10 @@ export default function Login() {
     startTransition(async () => {
       let res;
       if (!isLogin) res = await signUpAction(form);
-      else res = await loginAction(form);
+      else {
+        res = await loginAction(form);
+        setUser(res.user);
+      }
       if (res.error) setMessage(res.error);
       else {
         router.push("/profile");

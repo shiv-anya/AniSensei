@@ -66,12 +66,14 @@ export default function AsideMenu() {
 
   useEffect(() => {
     // Only runs on client
-    if (window.innerWidth >= 1024) {
+    if (width >= 1024) {
       setOpenMenu(true);
     }
     const handleClickOutside = (event) => {
       if (asideRef.current && !asideRef.current.contains(event.target)) {
-        setOpenMenu(false);
+        if (width < 1024) {
+          setOpenMenu(false);
+        }
       }
     };
 
@@ -85,6 +87,7 @@ export default function AsideMenu() {
       setChats(res);
     };
     if (user) getChatMessages();
+    else setChats([]);
   }, [user]);
   return (
     <>

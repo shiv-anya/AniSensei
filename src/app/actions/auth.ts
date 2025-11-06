@@ -81,12 +81,19 @@ export const loginAction = async ({ email, password }) => {
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
 
-  return { success: true, message: "Login successful" };
+  return {
+    success: true,
+    message: "Login successful",
+    user: JSON.parse(JSON.stringify(user)),
+  };
 };
 
 export const logoutAction = async () => {
-  (await cookies()).set("token", "", { maxAge: 0, path: "/" });
-  return { success: true, message: "Logged out" };
+  const cookieStore = await cookies();
+
+  cookieStore.delete("token");
+
+  return { success: true, message: "Logged out", user: null };
 };
 
 export async function getUserFromCookie() {
