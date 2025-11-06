@@ -78,6 +78,7 @@ export const loginAction = async ({ email, password }) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     path: "/",
+    sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
 
