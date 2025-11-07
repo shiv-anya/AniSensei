@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
   description: "Discover, track, and stream your favorite anime effortlessly.",
   other: {
-    "google-site-verification": "Ga_goz7CaJca8ai7WtDBpdOGNFgE7jCOQGO1Lh291UE",
+    "google-site-verification": "8ub3QoKcD7_10ovxSHexbBSgJC-6ZnflrFw8VQuUMxU",
   },
   openGraph: {
     title: "AniSensei | Watch Anime Smarter",
