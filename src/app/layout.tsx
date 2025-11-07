@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     template: "%s | AniSensei",
   },
   description: "Discover, track, and stream your favorite anime effortlessly.",
+  other: {
+    "google-site-verification": "Ga_goz7CaJca8ai7WtDBpdOGNFgE7jCOQGO1Lh291UE",
+  },
   openGraph: {
     title: "AniSensei | Watch Anime Smarter",
     description:
