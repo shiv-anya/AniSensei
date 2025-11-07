@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: "AniSensei",
     images: [
       {
-        url: "/hero.png",
+        url: "/assets/hero.png",
         width: 1200,
         height: 630,
         alt: "AniSensei preview banner",
