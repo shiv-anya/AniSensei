@@ -30,7 +30,7 @@ export const Navbar = () => {
             onMouseEnter={() => setIsHoverElement(item.name)}
             onMouseLeave={() => setIsHoverElement("")}
           >
-            <Link href={item.href} className="h-full">
+            <Link href={item.href} className="h-full" aria-label={item.name}>
               <div className="h-full flex flex-col items-center gap-1">
                 <div
                   className={`${

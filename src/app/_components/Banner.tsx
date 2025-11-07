@@ -76,6 +76,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
             href={`/browse/${id}/${urlTitle}`}
             className="max-xl:text-sm relative bg-blue-500 w-1/2 lg:w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-search shadow-blue-500/40 overflow-hidden hover:scale-110 duration-700 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[70%] before:h-full before:bg-gradient-to-r before:from-white/50 before:to-transparent before:translate-x-[-100%] before:-skew-x-12 hover:before:translate-x-[200%] 
   before:transition-transform before:duration-700 before:ease-in"
+            aria-label="watch anime"
           >
             <span className="text-xl">
               <IoPlayCircleOutline />
@@ -85,6 +86,7 @@ export const Banner = ({ name, date, type, rating, about, img, id }) => {
 
           <Link
             href={`/browse/${id}`}
+            aria-label="get details for anime"
             className="max-xl:text-sm bg-gray-800/50 border border-gray-700 backdrop-blur-sm w-1/2 lg:w-[30%] py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-110 hover:bg-gray-600/50 duration-700"
           >
             <span className="text-xl">
