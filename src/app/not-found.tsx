@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <section className="h-screen">
-      <div className="h-full w-full bg-black bg-[url('/assets/yourname-bg.jpg')] bg-contain bg-center bg-no-repeat relative">
-        <div className="h-full w-full absolute top-0 left-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.5)_5%,black_65%)] flex flex-col justify-center items-center">
+      <div className="h-full w-full bg-black bg-[url('/assets/yourname-bg.jpg')] bg-cover lg:bg-contain bg-center bg-no-repeat relative">
+        <div className="p-4 lg:p-0 max-lg:text-center h-full w-full absolute top-0 left-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.5)_5%,black_65%)] flex flex-col justify-center items-center">
           <div className="flex flex-col text-white font-bold text-2xl">
             <p>タ</p>
             <p>イ</p>
