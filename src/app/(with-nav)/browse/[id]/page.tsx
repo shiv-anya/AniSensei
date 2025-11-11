@@ -142,6 +142,7 @@ export default function AnimeInfo() {
             )}
             <div className="w-full mt-5 flex flex-col max-lg:items-center gap-2">
               {anime?.status !== "CANCELLED" &&
+                anime?.status !== "RELEASING" &&
                 anime?.status !== "NOT_YET_RELEASED" && (
                   <Link
                     href={`/browse/${anime?.id}/${
