@@ -3,6 +3,7 @@ import { useAuth } from "@/app/_context/AuthContext";
 import { useChats } from "@/app/_context/ChatContext";
 import { addMessage, getChats } from "@/app/actions/chats";
 import { generateGeminiResponse } from "@/app/actions/gemini";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
@@ -58,12 +59,20 @@ const BotMessage = ({
             <p>{response["suggest note"]}</p>
             <ul className="flex flex-col gap-2">
               {response?.suggestions?.map((s) => (
-                <li key={s.title}>
-                  <span className="text-blue-400 cursor-pointer">
-                    {s.title}
-                  </span>
-                  {": (" + s.reason + ")"}
-                </li>
+                <Link
+                  href={`/search?query=${s.title
+                    .split(" ")
+                    .join("+")
+                    .toLowerCase()}`}
+                  key={s.title}
+                >
+                  <li>
+                    <span className="text-blue-400 cursor-pointer">
+                      {s.title}
+                    </span>
+                    {": (" + s.reason + ")"}
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>

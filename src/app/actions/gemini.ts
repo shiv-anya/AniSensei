@@ -4,10 +4,14 @@ import { updateBotResponse } from "@/app/actions/chats";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function generateGeminiResponse({ chatId, userMessage, user }) {
-  const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  // Parse structured JSON safely
+  let structured;
+  try {
+    // structured = JSON.parse(text);
+    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  const systemPrompt = `
+    const systemPrompt = `
         You are an anime recommendation assistant for AniSensei. And you answer user queries only related to anime.
         You know about anime listed in the AniList database (Japanese anime only).
         You give personalized recommendations based on user's history, favorites, and watchlist.
@@ -37,8 +41,8 @@ export async function generateGeminiResponse({ chatId, userMessage, user }) {
         Ensure your reply is valid JSON only, nothing else.
 `;
 
-  // Build user-specific context and question
-  const userContext = `
+    // Build user-specific context and question
+    const userContext = `
 User Info:
 Logged In: ${user ? true : false}
 Favorites: ${user?.favorites}
@@ -46,7 +50,7 @@ Watch History: ${user?.history}
 Watchlist: ${user?.watchlist}
 `;
 
-  const finalPrompt = `
+    const finalPrompt = `
 ${systemPrompt}
 
 ${userContext}
@@ -54,19 +58,16 @@ ${userContext}
 User asked: ${userMessage}
 `;
 
-  // const userPrompt = `${systemPrompt}\nUser: ${input}`;
+    // const userPrompt = `${systemPrompt}\nUser: ${input}`;
 
-  const result = await model.generateContent(finalPrompt);
-  const text = await result.response.text();
-
-  // Parse structured JSON safely
-  let structured;
-  try {
-    // structured = JSON.parse(text);
-
+    const result = await model.generateContent(finalPrompt);
+    const text = await result.response.text();
     structured = JSON.parse(text);
   } catch {
-    structured = { chatTitle: "Sensei’s Anime Picks", suggestions: [] };
+    structured = {
+      suggestions: [],
+      note: "Failed to get a response. Try again after sometime.",
+    };
   }
 
   // Optionally, you can update DB directly here:
