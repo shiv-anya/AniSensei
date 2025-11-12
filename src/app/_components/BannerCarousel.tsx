@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Banner } from "./Banner";
 
@@ -9,6 +9,9 @@ const Carousel = ({ movies }) => {
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const goToPrevious = () => {
     const isFirst = currentIndex === 0;
@@ -39,26 +42,22 @@ const Carousel = ({ movies }) => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  // ✅ Touch handlers
   const handleTouchStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].clientX);
+    touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const moveX = e.touches[0].clientX - startX;
-    setTranslateX(moveX);
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
-    if (!isDragging) return;
-    if (translateX > 100) {
-      goToPrevious();
-    } else if (translateX < -100) {
-      goToNext();
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50; // minimum px distance to trigger swipe
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) goToNext(); // swipe left → next
+      else goToPrevious(); // swipe right → prev
     }
-    setIsDragging(false);
-    setTranslateX(0);
   };
 
   return (
