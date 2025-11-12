@@ -7,20 +7,37 @@ import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/app/_context/AuthContext";
+import { useToast } from "@/app/_hooks/useToast";
 
 export default function Login() {
+  const [showPwd, setShowPwd] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { setUser } = useAuth();
+  const { showToast, ToastContainer } = useToast();
 
   const handleInputChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!form.email || !form.password) {
+      showToast("warning", "Please fill all fields!");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      showToast(
+        "warning",
+        "Keep password length above or equal to 6 characters."
+      );
+      return;
+    }
+
     startTransition(async () => {
       let res;
       if (!isLogin) res = await signUpAction(form);
@@ -28,8 +45,13 @@ export default function Login() {
         res = await loginAction(form);
         setUser(res.user);
       }
-      if (res.error) setMessage(res.error);
-      else {
+      if (res.error) {
+        showToast("error", res.error || "Something went wrong!");
+      } else {
+        showToast(
+          "success",
+          isLogin ? "Login successful!" : "Account created!"
+        );
         router.push("/profile");
       }
     });
@@ -78,21 +100,31 @@ export default function Login() {
                   placeholder="email"
                   onChange={handleInputChange}
                 />
-                <button className="bg-blue-400 flex items-center justify-center text-xl px-2 rounded hover:bg-blue-500 transition duration-700">
+                <button
+                  className="bg-blue-400 flex items-center justify-center text-xl px-2 rounded hover:bg-blue-500 transition duration-700"
+                  onClick={(e) => e.preventDefault()}
+                >
                   <IoIosMail />
                 </button>
               </div>
               <div className="w-full bg-[#1b1b1b] flex justify-between pl-2 rounded my-5">
                 <input
-                  type="password"
+                  type={showPwd ? "text" : "password"}
                   name="password"
                   className="outline-none text-xs py-3"
                   placeholder="password"
+                  value={form.password}
                   onChange={handleInputChange}
                 />
-                <button className="bg-blue-400 flex items-center justify-center text-xl px-2 rounded hover:bg-blue-500 transition duration-700">
-                  <IoEyeOffSharp />
-                  {/* <IoEyeSharp /> */}
+
+                <button
+                  className="bg-blue-400 flex items-center justify-center text-xl px-2 rounded hover:bg-blue-500 transition duration-700"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPwd((prev) => !prev);
+                  }}
+                >
+                  {!showPwd ? <IoEyeOffSharp /> : <IoEyeSharp />}
                 </button>
               </div>
               <div className="flex flex-col gap-2 items-center mt-8">
@@ -113,6 +145,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }

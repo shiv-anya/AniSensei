@@ -37,6 +37,7 @@ export default async function RootLayout({ children }) {
       <body className="font-poppins">
         <AuthProvider>
           <main>{children}</main>
+          <div id="modal-root"></div>
         </AuthProvider>
       </body>
     </html>
