@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <a href="https://AniSensei-z.vercel.app/" target="_blank">
+    <img src="./public/attachments/logo.png" alt="AniSensei Logo" width="300"/>
+  </a>
+</p>
 
-## Getting Started
+<p align="center" style="font-size: 28px; font-weight: 700; margin: 0;">
+  AniSensei – Your Ultimate Anime Companion
+</p>
 
-First, run the development server:
+<p align="center">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  <!-- ⭐ Stars -->
+  <a href="https://github.com/shiv-anya/AniSensei/stargazers">
+    <img
+      src="https://img.shields.io/github/stars/shiv-anya/AniSensei?style=flat&color=blue&labelColor=1a1a1a"
+      alt="Stars"
+      height="22"
+    />
+  </a>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <a href="https://github.com/shiv-anya/AniSensei/issues">
+    <img
+      src="https://img.shields.io/github/issues/shiv-anya/AniSensei?style=flat&color=yellow&labelColor=1a1a1a"
+      alt="Issues"
+      height="22"
+    />
+  </a>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  <!-- 🍴 Forks -->
+  <a href="https://github.com/shiv-anya/AniSensei/forks">
+    <img
+      src="https://img.shields.io/github/forks/shiv-anya/AniSensei?style=flat&color=purple&labelColor=1a1a1a"
+      alt="Forks"
+      height="22"
+    />
+  </a>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+</p>
 
-## Learn More
+<div align="center">
 
-To learn more about Next.js, take a look at the following resources:
+AniSensei is a modern anime streaming and recommendation platform built with **Next.js**, **TypeScript**, and **Tailwind CSS**.  
+It helps you explore, track, and enjoy anime like never before — featuring smart recommendations, detailed browsing filters, and a clean, immersive interface.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+</div>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+---
+<details>
+  <summary><strong>✨ View Features</strong></summary>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<br />
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🚀 Core Features
+
+- 🔍 **Advanced Search** — Search anime by name, format, or genre  
+- 🧠 **AI Recommendations** — Get personalized anime suggestions based on your mood  
+- ⭐ **Favorites** — Save your favorite anime for quick access  
+- 🕒 **Watch History** — Automatically tracks what you've watched  
+- 📌 **Watchlist** — Keep track of shows you plan to watch  
+- 💬 **AI Chat** — Ask recommendations, summaries, or details anytime  
+- 🔐 **Authentication** — Secure login & signup using JWT + cookies  
+- 🎞️ **Beautiful UI** — Clean, responsive, modern design built with Tailwind CSS  
+- ⚡ **Optimized Performance** — Fast load times, client/server rendering where needed
+
+<br/>
+
+</details>
+
+## Previews
+<details>
+  <summary><strong>See attachments</strong></summary>
+
+### Additional Screenshots
+- ![Preview 1](./public/attachments/home.png)
+- ![Preview 2](./public/attachments/browse.png)
+- ![Preview 3](./public/attachments/search.png)
+- ![Preview 4](./public/attachments/profile.png)
+
+</details>
+
+## Installation and Local Development
+
+1. **Clone the repository**
+   
+   ```bash
+   git clone https://github.com/shiv-anya/AniSensei.git
+   
+2. **Move into the project directory**
+
+    ```bash
+   cd AniSensei
+    
+4. **Install dependencies**
+
+   ```bash
+   npm install
+   
+6. **Create a .env.local file**
+   
+   ```bash
+    MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_secret_key
+    REACT_APP_GEMINI_API_KEY=your_google_gemini_api_key
+   
+8. **Run the development server**
+
+   ```bash
+   npm run dev
+   
+10. **Open the project**
+    ```bash
+    http://localhost:3000
+
+---
+
+## ⭐ Support
+If you like this project, please consider giving it a star — it helps the project grow and reach more developers!
