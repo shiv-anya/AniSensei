@@ -5,7 +5,9 @@
 </p>
 
 <p align="center" style="font-size: 28px; font-weight: 700; margin: 0;">
+  <a href="https://AniSensei-z.vercel.app/" target="_blank">
   AniSensei – Your Ultimate Anime Companion
+  </a>
 </p>
 
 <p align="center">
